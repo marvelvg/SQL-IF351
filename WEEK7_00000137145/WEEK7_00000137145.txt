@@ -1,0 +1,580 @@
+NO 1-6 (Import By PhpMyAdmin karena struktur database sama dengan week 6 hanya perlu sedikit modifikasi pada table selain transaction dan paket)
+
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'SAX', NAMA_BELAKANG = 'Fucelli', ALAMAT = '04 Numero Quatro', EMAIL = 'sax@yahoo.com', NOMOR_TELEPON = '084-4444-4444', GAJI = '10000000' WHERE ID_EMPLOYEE='E0001';
+Query OK, 0 rows affected (0.001 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Smitty', NAMA_BELAKANG = 'Werbenmajensen', ALAMAT = '01 Under Sea', EMAIL = 'smitty@yahoo.com', NOMOR_TELEPON = '081-111-1111', GAJI = '5000000' WHERE ID_EMPLOYEE='E0002';
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Smitty', NAMA_BELAKANG = 'Werbenmajensen', ALAMAT = '01 Under Sea', EMAIL = 'smitty@gmail.com', NOMOR_TELEPON = '081-111-1111', GAJI = '5000000' WHERE ID_EMPLOYEE='E0002';                                                                                       
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Maximillion', NAMA_BELAKANG = 'Pegasus', ALAMAT = '18 Duelist Kingdom', EMAIL = 'maximillion@live.com', NOMOR_TELEPON = '083-171-1377', GAJI = '2000000' WHERE ID_EMPLOYEE='E0003';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'SAX', NAMA_BELAKANG = 'Fucelli', ALAMAT = '04 Numero Quatro', EMAIL = 'sax@yahoo.com', NOMOR_TELEPON = '084-4444-4444', GAJI = '10000000' WHERE ID_EMPLOYEE='E0001';
+Query OK, 0 rows affected (0.001 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Smitty', NAMA_BELAKANG = 'Werbenmajensen', ALAMAT = '01 Under Sea', EMAIL = 'smitty@gmail.com', NOMOR_TELEPON = '081-111-1111', GAJI = '5000000' WHERE ID_EMPLOYEE='E0002';                                                                                       
+Query OK, 0 rows affected (0.000 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Maximillion', NAMA_BELAKANG = 'Pegasus', ALAMAT = '18 Duelist Kingdom', EMAIL = 'maximillion@live.com', NOMOR_TELEPON = '083-171-1377', GAJI = '2000000' WHERE ID_EMPLOYEE='E0003';
+Query OK, 0 rows affected (0.000 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Oktavia', NAMA_BELAKANG = 'Seckendorff', ALAMAT = '70 Under World', EMAIL = 'oktavia@yahoo.com', NOMOR_TELEPON = '085-120-8753', GAJI = '3000000' WHERE ID_EMPLOYEE='E0004';
+Query OK, 1 row affected (0.008 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Frejya', NAMA_BELAKANG = 'Wion', ALAMAT = '05 Walkure Space', EMAIL = 'frejya@gmail.com', NOMOR_TELEPON = '088-237-6718', GAJI = '3500000' WHERE ID_EMPLOYEE='E0005';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Won', NAMA_BELAKANG = NULL, ALAMAT = '23 Harvest Moon', EMAIL = 'won@live.com', NOMOR_TELEPON = '089-671-0283', GAJI = '3750000' WHERE ID_EMPLOYEE='E0006';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE employee set NAMA_DEPAN = 'Barney', NAMA_BELAKANG = NULL, ALAMAT = '45 Dino Street', EMAIL = 'barney@yahoo.com', NOMOR_TELEPON = '087-332-9716', GAJI = '2500000' WHERE ID_EMPLOYEE='E0007';
+Query OK, 1 row affected (0.010 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> select * from employee;
++-------------+------------+---------------+------------------+------------------+--------------------+---------------+---------+
+| ID_EMPLOYEE | NAMA_DEPAN | NAMA_BELAKANG | JABATAN          | ALAMAT           | EMAIL              | NOMOR_TELEPON | GAJI    |
++-------------+------------+---------------+------------------+------------------+--------------------+---------------+---------+
+| E0001       | Anthony    | NULL          | Manager          | 70 Cool Guy      | anthony@umn.ac.id  | 123-456-4565  | 5000000 |
+| E0002       | Akino      | Archilles     | Chef             | 21 Kino Kino     | akino@student.com  | 354-124-5786  | 3500000 |
+| E0003       | Kevin      | Alexander     | Cashier          | 34 Nishinoya     | alex@yahoo.com     | 098-123-7832  | 3000000 |
+| E0004       | Ivy        | Marcia        | Chef             | 06 Wall Street   | ivy@yahoo.com      | 846-732-8427  | 3500000 |
+| E0005       | Martha     | Saphia        | Customer Service | 78 Ruby Fort     | martha@umn.ac.id   | 718-298-2873  | 3200000 |
+| E0006       | Nofiandy   | NULL          | Cashier          | 03 Smooth Hair   | nofiandy@gmail.com | 516-927-9268  | 3250000 |
+| E0007       | Octavany   | NULL          | Cashier          | 23 Relaxing Cafe | octa@iseng.com     | 654-876-1928  | 3150000 |
++-------------+------------+---------------+------------------+------------------+--------------------+---------------+---------+
+7 rows in set (0.013 sec)
+
+MariaDB [RESTORAN]>     UPDATE Customer SET NAMA_DEPAN = 'Santa', NAMA_BELAKANG = 'Monica', ALAMAT = '232 Database Annex', EMAIL = 'santa@live.com', NOMOR_TELEPON = '083-221-8762' WHERE ID_CUSTOMER = 'C0001';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Sil', NAMA_BELAKANG = 'Eighty', ALAMAT = '80 Downhill Building', EMAIL = 'sil@gmail.com', NOMOR_TELEPON = '082-123-0938' WHERE ID_CUSTOMER = 'C0002';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Chandra', NAMA_BELAKANG = 'Nalaar', ALAMAT = '191 Magic Land', EMAIL = 'chandra@yahoo.com', NOMOR_TELEPON = '089-382-8371' WHERE ID_CUSTOMER = 'C0003';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Gideon', NAMA_BELAKANG = 'Zura', ALAMAT = '202 Indes Annex', EMAIL = 'gideon@live.com', NOMOR_TELEPON = '084-829-3882' WHERE ID_CUSTOMER = 'C0004';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Strygwyr', NAMA_BELAKANG = NULL, ALAMAT = '147 Bloody Annex', EMAIL = 'strygwyr@gmail.com', NOMOR_TELEPON = '081-826-2372' WHERE ID_CUSTOMER = 'C0005';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Mogul', NAMA_BELAKANG = 'Kahn', ALAMAT = '182 ex Building', EMAIL = 'mogul@yahoo.com', NOMOR_TELEPON = '085-562-7782' WHERE ID_CUSTOMER = 'C0006';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'John', NAMA_BELAKANG = 'Cena', ALAMAT = '92 Smack Land', EMAIL = 'john@live.com', NOMOR_TELEPON = '086-829-9283' WHERE ID_CUSTOMER = 'C0007';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Budi', NAMA_BELAKANG = NULL, ALAMAT = '141 Wonder Land', EMAIL = 'budi@gmail.com', NOMOR_TELEPON = '087-927-8263' WHERE ID_CUSTOMER = 'C0008';
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Immelman', NAMA_BELAKANG = NULL, ALAMAT = '220 Plane Building', EMAIL = 'immelman@yahoo.com', NOMOR_TELEPON = '088-283-9372' WHERE ID_CUSTOMER = 'C0009';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE Customer SET NAMA_DEPAN = 'Datboi', NAMA_BELAKANG = NULL, ALAMAT = '31 Frog Annex', EMAIL = 'datboi@gmail.com', NOMOR_TELEPON = '081-028-0373' WHERE ID_CUSTOMER = 'C0010';
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [RESTORAN]> SELECT * FROM CUSTOMER;
++-------------+------------+---------------+----------------------+--------------------+---------------+
+| ID_CUSTOMER | NAMA_DEPAN | NAMA_BELAKANG | ALAMAT               | EMAIL              | NOMOR_TELEPON |
++-------------+------------+---------------+----------------------+--------------------+---------------+
+| C0001       | Santa      | Monica        | 232 Database Annex   | santa@live.com     | 083-221-8762  |
+| C0002       | Sil        | Eighty        | 80 Downhill Building | sil@gmail.com      | 082-123-0938  |
+| C0003       | Chandra    | Nalaar        | 191 Magic Land       | chandra@yahoo.com  | 089-382-8371  |
+| C0004       | Gideon     | Zura          | 202 Indes Annex      | gideon@live.com    | 084-829-3882  |
+| C0005       | Strygwyr   | NULL          | 147 Bloody Annex     | strygwyr@gmail.com | 081-826-2372  |
+| C0006       | Mogul      | Kahn          | 182 ex Building      | mogul@yahoo.com    | 085-562-7782  |
+| C0007       | John       | Cena          | 92 Smack Land        | john@live.com      | 086-829-9283  |
+| C0008       | Budi       | NULL          | 141 Wonder Land      | budi@gmail.com     | 087-927-8263  |
+| C0009       | Immelman   | NULL          | 220 Plane Building   | immelman@yahoo.com | 088-283-9372  |
+| C0010       | Datboi     | NULL          | 31 Frog Annex        | datboi@gmail.com   | 081-028-0373  |
++-------------+------------+---------------+----------------------+--------------------+---------------+
+
+
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'NASI KECAP', JENIS_MENU ='MAKANAN' WHERE ID_MENU = 'M0001';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'SODA MENTOS', JENIS_MENU = 'MINUMAN' WHERE ID_MENU = 'M0002';
+Query OK, 1 row affected (0.008 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'ES KRIM PANAS', JENIS_MENU = 'DESSERT' WHERE ID_MENU = 'M0003';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'AYAM OM', JENIS_MENU = 'MAKANAN' WHERE ID_MENU = 'M0004';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'TEH PEDAS', JENIS_MENU = 'MINUMAN' WHERE ID_MENU = 'M0005';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'GIGA PUDDING', JENIS_MENU = 'DESSERT' WHERE ID_MENU = 'M0006';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'NASI UMN', JENIS_MENU = 'MAKANAN' WHERE ID_MENU = 'M0007';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'KOPI SETARBAK', JENIS_MENU = 'MINUMAN' WHERE ID_MENU = 'M0008';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'KUE REBUS', JENIS_MENU = 'DESSERT' WHERE ID_MENU = 'M0009';
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> UPDATE MENU SET NAMA_MENU = 'GUDETAMA', JENIS_MENU = 'DESSERT' WHERE ID_MENU = 'M0010';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [RESTORAN]> select * from menu;
++---------+---------------+------------+----------+
+| ID_MENU | NAMA_MENU     | JENIS_MENU | ID_PAKET |
++---------+---------------+------------+----------+
+| M0001   | NASI KECAP    | MAKANAN    | P0001    |
+| M0002   | SODA MENTOS   | MINUMAN    | P0002    |
+| M0003   | ES KRIM PANAS | DESSERT    | P0003    |
+| M0004   | AYAM OM       | MAKANAN    | P0001    |
+| M0005   | TEH PEDAS     | MINUMAN    | P0001    |
+| M0006   | GIGA PUDDING  | DESSERT    | P0003    |
+| M0007   | NASI UMN      | MAKANAN    | P0002    |
+| M0008   | KOPI SETARBAK | MINUMAN    | P0002    |
+| M0009   | KUE REBUS     | DESSERT    | P0002    |
+| M0010   | GUDETAMA      | DESSERT    | P0003    |
++---------+---------------+------------+----------+
+10 rows in set (0.001 sec)
+
+MariaDB [RESTORAN]> select concat(NAMA_DEPAN, ' ', COALESCE(NAMA_BELAKANG, '')) AS 'NAMA CUSTOMER' FROM customer ORDER BY NAMA_DEPAN ASC;
++----------------+
+| NAMA CUSTOMER  |
++----------------+
+| Budi           |
+| Chandra Nalaar |
+| Datboi         |
+| Gideon Zura    |
+| Immelman       |
+| John Cena      |
+| Mogul Kahn     |
+| Santa Monica   |
+| Sil Eighty     |
+| Strygwyr       |
++----------------+
+10 rows in set (0.001 sec)
+
+MariaDB [RESTORAN]> select MONTHNAME(transaction_date) AS 'Bulan', count(*) AS 'jumlah' from transaction group by month(transaction_date);
++----------+--------+
+| Bulan    | jumlah |
++----------+--------+
+| February |      1 |
+| March    |      4 |
+| April    |      1 |
+| June     |      1 |
+| August   |      2 |
+| November |      1 |
++----------+--------+
+6 rows in set (0.001 sec)
+
+MariaDB [RESTORAN]> select concat(nama_depan, ' ', coalesce(nama_belakang, '')) AS 'NAMA', GAJI from employee WHERE EMAIL LIKE '%@gmail.com' ORDER BY GAJI ASC LIMIT 1;
++-------------+---------+
+| NAMA        | GAJI    |
++-------------+---------+
+| Frejya Wion | 3500000 |
++-------------+---------+
+1 row in set (0.001 sec)
+
+MariaDB [RESTORAN]> select id_employee as 'kode pekerja', count(*) as 'banyak transaksi', group_concat(date_format(transaction_date, '%e %M %Y')) AS TANGGAL
+    -> from transaction
+    -> group by id_employee
+    -> order by count(id_employee) desc;
++--------------+------------------+---------------------------------------------------------------+
+| kode pekerja | banyak transaksi | TANGGAL                                                       |
++--------------+------------------+---------------------------------------------------------------+
+| E0002        |                4 | 25 February 2016,10 April 2016,30 August 2016,2 November 2016 |
+| E0001        |                2 | 12 March 2016,30 March 2016                                   |
+| E0005        |                2 | 1 March 2016,18 August 2016                                   |
+| E0003        |                1 | 10 March 2016                                                 |
+| E0004        |                1 | 28 June 2016                                                  |
++--------------+------------------+---------------------------------------------------------------+
+5 rows in set (0.007 sec)
+
+MariaDB [RESTORAN]> select
+    -> SUM(CASE WHEN EMAIL LIKE '%@gmail.com' THEN 1 ELSE 0 END) AS 'Google',
+    -> SUM(CASE WHEN EMAIL LIKE '%@live.com' THEN 1 ELSE 0 END) AS 'Live',
+    -> SUM(CASE WHEN EMAIL LIKE '%@yahoo.com' THEN 1 ELSE 0 END) AS 'Yahoo'
+    -> from employee;
++--------+------+-------+
+| Google | Live | Yahoo |
++--------+------+-------+
+|      2 |    2 |     3 |
++--------+------+-------+
+1 row in set (0.001 sec)
+
+
+
+
+MariaDB [RESTORAN]> select
+    -> CONCAT(employee.NAMA_DEPAN, ' ', COALESCE(employee.NAMA_BELAKANG, '')) AS 'NAMA'
+    -> from employee
+    -> JOIN transaction on employee.id_employee = transaction.id_employee
+    -> group by employee.nama_depan
+    -> ;
++-----------------------+
+| NAMA                  |
++-----------------------+
+| Frejya Wion           |
+| Maximillion Pegasus   |
+| Oktavia Seckendorff   |
+| SAX Fucelli           |
+| Smitty Werbenmajensen |
++-----------------------+
+5 rows in set (0.001 sec)
+
+
+
+MariaDB [RESTORAN]> select
+    -> date_format(transaction_date, '%e %M %Y') AS 'Waktu Transaksi',
+    -> (CASE WHEN date_format(transaction_date, '%m') < 4 AND date_format(transaction_date, '%y') < 2017  THEN 'Transaksi lama' else 'Transaksi Baru' END) AS 'Kategori Waktu Transaksi'
+    -> from transaction
+    -> WHERE date_format(transaction_date, '%m') BETWEEN 3 AND 8
+    -> ORDER BY transaction_date ASC;
++-----------------+--------------------------+
+| Waktu Transaksi | Kategori Waktu Transaksi |
++-----------------+--------------------------+
+| 1 March 2016    | Transaksi lama           |
+| 10 March 2016   | Transaksi lama           |
+| 12 March 2016   | Transaksi lama           |
+| 30 March 2016   | Transaksi lama           |
+| 10 April 2016   | Transaksi Baru           |
+| 28 June 2016    | Transaksi Baru           |
+| 18 August 2016  | Transaksi Baru           |
+| 30 August 2016  | Transaksi Baru           |
++-----------------+--------------------------+
+8 rows in set (0.001 sec)
+
+MariaDB [RESTORAN]> select concat(nama_depan, ' ', coalesce(nama_belakang, '')) AS NAMA
+    -> from employee
+    -> ORDER BY char_length(concat(nama_depan, ' ', coalesce(nama_belakang, '') )) DESC
+    -> LIMIT 1;
++-----------------------+
+| NAMA                  |
++-----------------------+
+| Smitty Werbenmajensen |
++-----------------------+
+1 row in set (0.001 sec)
+
+
+MariaDB [RESTORAN]> select concat(nama_depan, ' ', coalesce(nama_belakang, '')) AS NAMA
+    -> from employee
+    -> order by char_length (concat(nama_depan, ' ', coalesce(nama_belakang, ''))) asc;
++-----------------------+
+| NAMA                  |
++-----------------------+
+| Won                   |
+| Barney                |
+| SAX Fucelli           |
+| Frejya Wion           |
+| Maximillion Pegasus   |
+| Oktavia Seckendorff   |
+| Smitty Werbenmajensen |
++-----------------------+
+7 rows in set (0.001 sec)
+
+
+select 
+	concat(e.nama_depan, ' ', coalesce(e.nama_belakang, '')) AS 'NAMA KARYAWAN', 
+	group_concat(
+		c.nama_depan, ' ', coalesce(c.nama_belakang, '') 
+		ORDER BY c.nama_depan) AS 'NAMA CUSTOMER',
+	sum(p.harga_paket) AS HARGA_PAKET
+
+from employee e
+JOIN transaction t 
+	ON e.id_employee = t.id_employee
+RIGHT JOIN customer c 
+	ON t.id_customer = c.id_customer
+RIGHT JOIN paket p 
+	ON t.id_paket = p.id_paket
+
+
+group by t.id_employee
+order by harga_paket desc, concat(c.nama_depan, ' ', coalesce(c.nama_belakang, '')) asc
+LIMIT 1
+;
+
+MariaDB [restoran]> select
+    ->  concat(e.nama_depan, ' ', coalesce(e.nama_belakang, '')) AS 'NAMA KARYAWAN',
+    ->  group_concat(
+    ->          c.nama_depan, ' ', coalesce(c.nama_belakang, '')
+    ->          ORDER BY c.nama_depan) AS 'NAMA CUSTOMER',
+    ->  sum(p.harga_paket) AS HARGA_PAKET
+    ->
+    -> from employee e
+    -> JOIN transaction t
+    ->  ON e.id_employee = t.id_employee
+    -> RIGHT JOIN customer c
+    ->  ON t.id_customer = c.id_customer
+    -> RIGHT JOIN paket p
+    ->  ON t.id_paket = p.id_paket
+    ->
+    ->
+    -> group by t.id_employee
+    -> order by harga_paket desc, concat(c.nama_depan, ' ', coalesce(c.nama_belakang, '')) asc
+    -> LIMIT 1
+    -> ;
++-----------------------+---------------------------------------------+-------------+
+| NAMA KARYAWAN         | NAMA CUSTOMER                               | HARGA_PAKET |
++-----------------------+---------------------------------------------+-------------+
+| Smitty Werbenmajensen | Budi ,Chandra Nalaar,Immelman ,Santa Monica |     9000000 |
++-----------------------+---------------------------------------------+-------------+
+1 row in set (0.015 sec)
+MariaDB [restoran]> select concat(reverse(lower(left(nama_depan,3))),
+    ->    case
+    ->  when
+    ->          char_length(concat(nama_depan, coalesce(nama_belakang, ''))) % 3 = 0 THEN 'pen'
+    ->  when
+    ->          char_length(concat(nama_depan, coalesce(nama_belakang, ''))) % 3 = 1 THEN 'apple'
+    ->  else 'pineapple'
+    ->    END,
+    ->    case
+    ->  when
+    ->          char_length(substring_index(substring_index(alamat, ' ', -2), ' ', 1)) % 3 = 0
+    ->                  THEN left(reverse(substring_index(substring_index(alamat, ' ', -2), ' ', 1)), 4)
+    ->  when
+    ->          char_length(substring_index(substring_index(alamat, ' ', -2), ' ', 1)) % 3 = 1
+    ->                  THEN reverse(substring_index(substring_index(alamat, ' ', -2), ' ', 1))
+    ->  else REVERSE(LOWER(SUBSTRING_INDEX(SUBSTRING_INDEX(alamat, ' ', -2), ' ', 1)))
+    ->  END
+    -> ) AS HASHING
+    -> from customer
+    -> order by HASHING ASC;
++----------------------+
+| HASHING              |
++----------------------+
+| ahcapplecigam        |
+| digapplesedni        |
+| dubappleredn         |
+| gompenxe             |
+| hojpineapplekcams    |
+| lispenllihnwod       |
+| mmipineappleenalp    |
+| naspineappleesabatad |
+| rtspineappleydoo     |
+| tadpengorF           |
++----------------------+
+10 rows in set (0.001 sec)
+
+MariaDB [ikea]> select concat(e.firstname, ' ', e.lastname) AS NAMA,
+    ->        j.salary AS SALARY
+    ->
+    -> from employees e
+    -> LEFT JOIN jobs j on e.jobid = j.jobid
+    -> ORDER BY concat(e.firstname, ' ', e.lastname) ASC;
++--------------------+----------+
+| NAMA               | SALARY   |
++--------------------+----------+
+| Aaron Moreno       |  6000000 |
+| Alfredo Cooper     |  6000000 |
+| Alice Fields       |  6000000 |
+| Audrey Robertson   |  5750000 |
+| Camille Edwards    |  6000000 |
+| Cary Santiago      |  6000000 |
+| Cecil Wade         |  6000000 |
+| Christine Ingram   |  6000000 |
+| Clay Young         |  5750000 |
+| Dominicus Owen     | 12500000 |
+| Estelle Burton     |  6250000 |
+| Geranld Phelps     |  4500000 |
+| Ignacio Richardson |  4750000 |
+| Irma Luna          |  4750000 |
+| Ivan Jeremy        | 12500000 |
+| Jan Long           |  5750000 |
+| Jenna May          |  6250000 |
+| Jeremy Evan        |  4750000 |
+| Jim Love           |  5500000 |
+| Kendra Jonston     |  6000000 |
+| Kevin Alexander    | 12500000 |
+| Kevin Padawangi    | 12500000 |
+| Leah Caldwell      |  6000000 |
+| Leah Webber        |  5500000 |
+| Leticia Hampton    |  5500000 |
+| Martha Mills       |  4500000 |
+| Maurice Ford       |  6000000 |
+| Melanie Pierce     |  5750000 |
+| Mildred Sanders    |  6000000 |
+| Mindy Cannon       |  6000000 |
+| Olga Barrett       |  5500000 |
+| Paula Tuckers      |  5750000 |
+| Pete Cain          |  5250000 |
+| Philip Burns       |  6250000 |
+| Raul Diaz          |  4500000 |
+| Ruth Mitchell      |  6250000 |
+| Santago Goodwin    |  6000000 |
+| Spencer Watts      |  4750000 |
+| Sue Price          |  5750000 |
+| Ted Stokes         |  5500000 |
+| Vellma Carr        |  6000000 |
+| Wilma George       |  5750000 |
++--------------------+----------+
+42 rows in set (0.001 sec)
+MariaDB [ikea]> select s.shelfid AS SHELFID
+    -> from shelves s
+    -> join products p on s.shelfid = p.shelfid
+    -> group by p.shelfid
+    -> order by sum(p.stock) asc
+    -> limit 3;
++---------+
+| SHELFID |
++---------+
+| R0002   |
+| R0001   |
+| R0006   |
++---------+
+3 rows in set (0.002 sec)
+
+MariaDB [ikea]> select a.jobdesc as Jobs,
+    -> count(e.jobid) as Jumlah
+    ->
+    -> from jobs a
+    -> join employees e on a.jobid = e.jobid
+    -> group by a.jobdesc
+    -> order by Jobs;
++-----------------------------------+--------+
+| Jobs                              | Jumlah |
++-----------------------------------+--------+
+| Communication and Interior Design |      1 |
+| Customer Relations                |      9 |
+| Finance and Business Navigation   |      1 |
+| Human Resource                    |      5 |
+| IT                                |      4 |
+| Logistics                         |      4 |
+| Manager                           |      4 |
+| Marketing                         |      4 |
+| Restaurant (IKEA FOOD)            |      3 |
+| Sales                             |      7 |
++-----------------------------------+--------+
+10 rows in set (0.001 sec)
+
+
+MariaDB [ikea]> select t.TYPENAME AS TYPE, count(t.typeid) AS JUMLAH_PRODUK, sum(p.stock) AS STOKNYA
+    -> from producttype t
+    -> join products p on t.typeid = p.typeid
+    -> WHERE Typename LIKE '%METOD%'
+    -> group by t.typename;
++---------------------------------+---------------+---------+
+| TYPE                            | JUMLAH_PRODUK | STOKNYA |
++---------------------------------+---------------+---------+ //gajelas soal minta jumlah apa? contoh jg gajelas no 19 jg
+| METOD interior fittings         |             5 |     250 |
+| METOD Kitchen cabinets & fronts |             5 |     250 |
+| METOD Kitchen taps & sinks      |             5 |     250 |
+| METOD Worktops                  |             5 |     250 |
++---------------------------------+---------------+---------+
+4 rows in set (0.001 sec)
+
+MariaDB [ikea]> select distinct(e.ManagerID), concat(m.firstname, ' ', m.lastname) AS NAMA
+    -> from employees e
+    -> JOIN employees m on e.managerid= m.employeeid
+    -> WHERE e.ManagerID  IS NOT NULL
+    -> limit 3;
++-----------+-----------------+
+| ManagerID | NAMA            |
++-----------+-----------------+
+| E0004     | Dominicus Owen  |
+| E0001     | Kevin Alexander |
+| E0002     | Ivan Jeremy     |
++-----------+-----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [ikea]> select  r.F_OrderID, f.price AS TOTAL_HARGA
+    -> from restaurant r
+    -> join forderdetails f on r.F_Orderid = f.f_orderid
+    -> WHERE date_format(r.F_orderdate, '%m') = 1
+    -> group by r.f_orderid
+    ->
+    -> UNION
+    -> SELECT 'Total', SUM(f.price)
+    -> from restaurant r
+    -> join forderdetails f on r.F_Orderid = f.f_orderid
+    -> WHERE date_format(r.F_orderdate, '%m') = 1
+    -> ;
++-----------+-------------+
+| F_OrderID | TOTAL_HARGA |
++-----------+-------------+
+| RR001     |      110000 |
+| RR002     |        8000 |
+| RR003     |      105000 |
+| RR004     |       21000 |
+| RR005     |       75000 |
+| Total     |      319000 |
++-----------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [ikea]> select distinct(orderid) AS ID,
+    -> sum(price * qty) AS TOTAL_REVENUE
+    -> from orderdetails
+    -> group by orderid
+    -> having sum(price * qty) > 500000;
++-------+---------------+
+| ID    | TOTAL_REVENUE |
++-------+---------------+
+| OR001 |       1471000 |
+| OR002 |       6000000 |
+| OR003 |       4999000 |   // revenue gross = jumlah produk x Harga blm di itung yg contoh
+| OR004 |       1389000 |
+| OR005 |       3845000 |
+| OR007 |       7937000 |
+| OR008 |       3975000 |
+| OR009 |       1799000 |
+| OR010 |        799000 |
+| OR011 |       3875000 |
+| OR013 |       3400000 |
+| OR015 |       4324000 |
+| OR016 |       3849000 |
+| OR019 |       8797000 |
+| OR020 |      11779000 |
++-------+---------------+
+15 rows in set (0.001 sec)
+MariaDB [ikea]> select concat(e.firstname, '  ', coalesce(e.lastname, '')) AS MANAGER,
+    ->  group_concat(m.firstname, '  ', coalesce(m.lastname, '')) AS KARYAWAN
+    ->
+    -> from employees e
+    -> join employees m On  m.managerid = e.employeeid
+    ->
+    -> group by m.managerid;
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| MANAGER          | KARYAWAN                                                                                                                                       |
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+| Kevin  Alexander | Aaron  Moreno,Clay  Young,Ruth  Mitchell,Jan  Long,Wilma  George,Kendra  Jonston,Paula  Tuckers,Camille  Edwards,Cary  Santiago,Leah  Caldwell |
+| Ivan  Jeremy     | Christine  Ingram,Jenna  May,Pete  Cain,Melanie  Pierce,Philip  Burns,Leticia  Hampton,Vellma  Carr,Alfredo  Cooper,Mindy  Cannon              |
+| Kevin  Padawangi | Audrey  Robertson,Alice  Fields,Santago  Goodwin,Estelle  Burton,Sue  Price,Cecil  Wade,Raul  Diaz,Martha  Mills,Mildred  Sanders              |
+| Dominicus  Owen  | Olga  Barrett,Maurice  Ford,Irma  Luna,Jim  Love,Leah  Webber,Spencer  Watts,Ignacio  Richardson,Ted  Stokes,Jeremy  Evan                      |
++------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+4 rows in set (0.001 sec)
