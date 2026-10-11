@@ -1,0 +1,131 @@
+SOAL A
+MariaDB [attachment1]> select * from preorders;
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+| OrderID | CustomerName  | CustomerPhone | Menu1                       | Menu2                     | Menu3                     | TotalAmount |
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+|     101 | Mas Narji     | 081310001111  | Nasi Ayam Cemani Khas Ngawi | RotiO Stasiun Lempuyangan | Puding Coklat Pak Hambali |    36000.00 |
+|     102 | Bagas Pratama | 082120002222  | Soto Blakatak Blakutuk      | NULL                      | NULL                      |    25000.00 |
+|     103 | Pak Kangkung  | 083830003333  | Kebab Mas Rusdi             | Jus Kecubung              | NULL                      |    35000.00 |
+|     104 | Mas Narji     | 081310001111  | MBG Ambarawa Express        | Jus Kecubung              | RotiO Stasiun Lempuyangan |    33000.00 |
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+
+preorders(OrderID, CustomerName, CustomerPhome, Menu 1, Menu2, Menu3, TotalAmount)
+TENTUKAN 1NF (TIDAK ADA COMPOSITE KEY) 
+
+LANJUT 2NF, MAKA TABEL HARUS DI PECAH (DROP LALU -> RECREATE TABEL)
+OrderID -> CustomerName, CustomerPhone
+CustomerName -> CustomerPhone // menyelesaikan masalah pak narji dalam pergantian nomor telepon
+(MENU 1, MENU 2, MENU 3) -> TotalAmount
+
+3NF CustomerPhone transitif melalui CustomerName, jadi
+
+OrderID -> CustomerName
+CustomerName -> CustomerPhone  
+ORDERID, (MENU 1, MENU 2, MENU 3) -> TotalAmount 
+
+
+
+MariaDB [attachment1]> drop table preorders;
+Query OK, 0 rows affected (0.004 sec)
+
+MariaDB [attachment1]> Create Table Queue1(
+    ->      ORDERID INT,
+    ->      CUSTOMERNAME Varchar(100),
+    ->
+    ->      PRIMARY KEY(CUSTOMERNAME)
+    ->    );
+
+Query OK, 0 rows affected (0.005 sec)
+MariaDB [attachment1]> Create Table DataCustomer1(
+    -> CustomerName Varchar(100),
+    -> CustomerPhone Varchar(14),
+    -> FOREIGN KEY (CustomerNAME) REFERENCES Queue1(CUSTOMERNAME)
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [attachment1]> Create Table Customer_bayar1(
+    ->      ORDERID INT(10),
+    ->      MENU1 VARCHAR(50),
+    ->      MENU2 VARCHAR(50),
+    ->      MENU3 VARCHAR(50),
+    ->
+    ->      PRIMARY KEY (ORDERID)
+    ->      );
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [attachment1]> show tables;
++-----------------------+
+| Tables_in_attachment1 |
++-----------------------+
+| customer_bayar1       |
+| datacustomer1         |
+| queue1                |
++-----------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [attachment1]>
+MariaDB [attachment1]>
+MariaDB [attachment1]> ALTER TABLE customer_bayar1
+    -> ADD COLUMN TOTAL_AMOUNT INT;
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [attachment1]> select * from preorders;
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+| OrderID | CustomerName  | CustomerPhone | Menu1                       | Menu2                     | Menu3                     | TotalAmount |
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+|     101 | Mas Narji     | 081310001111  | Nasi Ayam Cemani Khas Ngawi | RotiO Stasiun Lempuyangan | Puding Coklat Pak Hambali |    36000.00 |
+|     102 | Bagas Pratama | 082120002222  | Soto Blakatak Blakutuk      | NULL                      | NULL                      |    25000.00 |
+|     103 | Pak Kangkung  | 083830003333  | Kebab Mas Rusdi             | Jus Kecubung              | NULL                      |    35000.00 |
+|     104 | Mas Narji     | 081310001111  | MBG Ambarawa Express        | Jus Kecubung              | RotiO Stasiun Lempuyangan |    33000.00 |
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+SOAL B
+MariaDB [attachment1]> INSERT INTO Customer_bayar1(ORDERID, MENU1, MENU2, MENU3, TOTAL_AMOUNT)
+    -> VALUES(101, ' Nasi Ayam Cemani Khas Ngawi', ' RotiO Stasiun Lempuyangan' , 'Puding Coklat Pak Hambali', 36000),
+    -> (102, ' Soto Blakatak Blakutuk ', NULL, NULL, 25000),
+    -> (103, 'Kebab Mas Rusdi', ' Jus Kecubung', NULL, 35000),
+    -> (104, 'MBG Ambarawa Express', ' Jus Kecubung', 'RotiO Stasiun Lempuyangan', 33000);
+Query OK, 4 rows affected (0.001 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [attachment1]>
+
+MariaDB [attachment1]> INSERT INTO datacustomer(CustomerName, CustomerPhone)
+    -> VALUES('Mas Narji', '081310001111'),
+    -> ('Bagas Pratama', '082120002222'),
+    -> ('Pak Kangkung ', '083830003333');
+Query OK, 3 rows affected (0.002 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+ALTER TABLE datacustomer1
+ADD FOREIGN KEY (CustomerName) REFERENCES queue1(CUSTOMERNAME);
+MariaDB [attachment1]> INSERT INTO datacustomer1(CustomerPhone)
+    -> VALUES('081310001111'), ('082120002222'), ('083830003333'), ('081310001111');
+Query OK, 4 rows affected (0.001 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [attachment1]> INSERT INTO queue1(ORDERID, CUSTOMERNAME)
+    -> VALUES(101, 'MAS NARJI'),
+    -> (102, 'BAGAS PRATAMA'),
+    -> (103, 'PAK KANGKUNG'),
+    -> (104, 'MAS_NARJI');
+Query OK, 4 rows affected (0.001 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+
+SOAL C
+
+Query OK, 0 rows affected (0.008 sec)
+MariaDB [attachment1]> CREATE TABLE HARGA_RESMI(
+    -> ORDERID VARCHAR(10),
+    -> NAMA_PELANGGAN VARCHAR(50),
+    -> HARGA INT
+    -> );
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [attachment1]> ALTER TABLE HARGA_RESMI ADD FOREIGN KEY (NAMA_PELANGGAN) REFERENCES queue1(CUSTOMERNAME);
+Query OK, 0 rows affected (0.029 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [attachment1]>s: 0
+

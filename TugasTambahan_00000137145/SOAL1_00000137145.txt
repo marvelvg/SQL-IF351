@@ -1,0 +1,169 @@
+MariaDB [attachment1]> select * from preorders;
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+| OrderID | CustomerName  | CustomerPhone | Menu1                       | Menu2                     | Menu3                     | TotalAmount |
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+|     101 | Mas Narji     | 081310001111  | Nasi Ayam Cemani Khas Ngawi | RotiO Stasiun Lempuyangan | Puding Coklat Pak Hambali |    36000.00 |
+|     102 | Bagas Pratama | 082120002222  | Soto Blakatak Blakutuk      | NULL                      | NULL                      |    25000.00 |
+|     103 | Pak Kangkung  | 083830003333  | Kebab Mas Rusdi             | Jus Kecubung              | NULL                      |    35000.00 |
+|     104 | Mas Narji     | 081310001111  | MBG Ambarawa Express        | Jus Kecubung              | RotiO Stasiun Lempuyangan |    33000.00 |
++---------+---------------+---------------+-----------------------------+---------------------------+---------------------------+-------------+
+4 rows in set (0.001 sec)
+
+A. Normalisasi Data
+preorders(OrderId, CustomerName, CustomerPhone, Menu1, Menu2, Menu3, TotalAmount) // supaya bs menjawab pertanyaan yang bagian c maka totalamount di hilangkan, cm bisa terlihat dengan query
+
+1NF (Hilangkan MultiValue Attribute) // Menu hanya boleh dalam bentuk 1 buah kolom
+preorders(OrderId, CustomerID, CustomerName, CustomerPhone, MenuID, Menu, Harga) // Tambah CustomerID utk menjawab permasalahn mas narji dan Harga mengikuti database yang asli 
+
+2NF (Find dependencynya) 
+OrderId -> CustomerID, CustomerName, CustomerPhone, MenuID, Menu, Harga
+OrderId -> MenuID
+
+3NF (CustomerID, CustomerName, CustomerPhone) transitif
+maka 
+
+OrderId -> CustomerID, MENUID
+CustomerID -> CustomerName, CustomerPhone 
+MenuID -> Menu, Harga
+
+
+MariaDB [attachment1]> Create table DataCustomer(
+    ->  CustomerID VARCHAR(40) PRIMARY KEY,
+    ->  CustomerName VARCHAR(40),
+    ->  CustomerPhone VARCHAR(40)
+    -> );
+Query OK, 0 rows affected (0.021 sec)
+
+MariaDB [attachment1]> desc DataCustomer;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| CustomerID    | varchar(40) | NO   | PRI | NULL    |       |
+| CustomerName  | varchar(40) | YES  |     | NULL    |       |
+| CustomerPhone | varchar(40) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.014 sec)
+
+MariaDB [attachment1]> Create table MENU(
+    ->  MenuID VARCHAR(40) PRIMARY KEY,
+    ->  Menu VARCHAR(40),
+    ->  Harga INT
+    -> );
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [attachment1]> desc menu;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| MenuID | varchar(40) | NO   | PRI | NULL    |       |
+| Menu   | varchar(40) | YES  |     | NULL    |       |
+| Harga  | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.013 sec)
+
+MariaDB [attachment1]> CREATE TABLE Transaction(
+    ->     OrderID VARCHAR(40),
+    ->     CustomerID VARCHAR(40),
+    ->     MenuID VARCHAR(40),
+    ->     PRIMARY KEY (OrderID, MenuID),
+    ->     FOREIGN KEY (CustomerID) REFERENCES DataCustomer(CustomerID),
+    ->     FOREIGN KEY (MenuID) REFERENCES Menu(MenuID)
+    -> );
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [attachment1]> desc transaction;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| OrderID    | varchar(40) | NO   | PRI | NULL    |       |
+| CustomerID | varchar(40) | YES  | MUL | NULL    |       |
+| MenuID     | varchar(40) | NO   | PRI | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.010 sec)
+
+MariaDB [attachment1]> insert into menu(MenuID, Menu, Harga)
+    -> VALUES('301', 'Nasi Ayam Cemani Khas Ngawi', '22000'),
+    -> ('302', 'Soto Blakatak Blakutuk', '25000'),
+    -> ('303', 'Jus Kecubung', '15000'),
+    -> ('304', 'Puding Coklat Pak Hambali', '8000'),
+    -> ('305', 'Kebab Mas Rusdi', '20000'),
+    -> ('306', 'MBG Ambarawa Express', '12000'),
+    -> ('307', 'Roti O Stasiun Lempuyangan', '6000');
+Query OK, 7 rows affected (0.009 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [attachment1]> insert into datacustomer(customerid, customername, customerphone)
+    -> VALUES ('401', 'Mas Narji', '081310001111'),
+    -> ('402', 'Bagas Pratama' , '082120002222'),
+    -> ('403', 'Pak Kangkung', '083830003333');
+Query OK, 3 rows affected (0.010 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+insert into transaction(orderId, customerid, menuid)
+values('101', '401', '301'),
+('101', '401', '307'),
+('101', '401', '304'),
+('102', '402', '302'),
+('103', '403', '305'),
+('103', '403', '303'),
+('104', '401', '306'),
+('104', '401', '303'),
+('104', '401', '307');
+
+MariaDB [attachment1]> select * from transaction;
++---------+------------+--------+
+| OrderID | CustomerID | MenuID |
++---------+------------+--------+
+| 101     | 401        | 301    |
+| 101     | 401        | 304    |
+| 101     | 401        | 307    |
+| 104     | 401        | 303    |
+| 104     | 401        | 306    |
+| 104     | 401        | 307    |
+| 102     | 402        | 302    |
+| 103     | 403        | 303    |
+| 103     | 403        | 305    |
++---------+------------+--------+
+9 rows in set (0.001 sec)
+
+MariaDB [attachment1]> select * from menu;
++--------+-----------------------------+-------+
+| MenuID | Menu                        | Harga |
++--------+-----------------------------+-------+
+| 301    | Nasi Ayam Cemani Khas Ngawi | 22000 |
+| 302    | Soto Blakatak Blakutuk      | 25000 |
+| 303    | Jus Kecubung                | 15000 |
+| 304    | Puding Coklat Pak Hambali   |  8000 |
+| 305    | Kebab Mas Rusdi             | 20000 |
+| 306    | MBG Ambarawa Express        | 12000 |
+| 307    | Roti O Stasiun Lempuyangan  |  6000 |
++--------+-----------------------------+-------+
+7 rows in set (0.001 sec)
+
+MariaDB [attachment1]> select * from datacustomer;
++------------+---------------+---------------+
+| CustomerID | CustomerName  | CustomerPhone |
++------------+---------------+---------------+
+| 401        | Mas Narji     | 081310001111  |
+| 402        | Bagas Pratama | 082120002222  |
+| 403        | Pak Kangkung  | 083830003333  |
++------------+---------------+---------------+
+3 rows in set (0.001 sec)
+
+MariaDB [attachment1]> select t.orderid AS PEMBELIAN, group_concat(t.menuid) AS JUMLAH_MENU, group_concat(m.menu, ' ') AS JENIS_MENU, sum(m.harga) AS HARGA_TOTAL
+    ->
+    -> from transaction t
+    -> join menu m on t.menuid = m.menuid
+    -> group by t.orderid;
++-----------+-------------+-------------------------------------------------------------------------------------+-------------+
+| PEMBELIAN | JUMLAH_MENU | JENIS_MENU                                                                          | HARGA_TOTAL |
++-----------+-------------+-------------------------------------------------------------------------------------+-------------+
+| 101       | 301,307,304 | Nasi Ayam Cemani Khas Ngawi ,Roti O Stasiun Lempuyangan ,Puding Coklat Pak Hambali  |       36000 |
+| 102       | 302         | Soto Blakatak Blakutuk                                                              |       25000 |
+| 103       | 303,305     | Jus Kecubung ,Kebab Mas Rusdi                                                       |       35000 |
+| 104       | 307,306,303 | Roti O Stasiun Lempuyangan ,MBG Ambarawa Express ,Jus Kecubung                      |       33000 |
++-----------+-------------+-------------------------------------------------------------------------------------+-------------+
+4 rows in set (0.001 sec)
+
+
+

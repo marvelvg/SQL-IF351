@@ -1,0 +1,12 @@
+
+A
+MariaDB [attachment2]> ALTER TABLE GAMES ADD COLUMN STATUS VARCHAR(20);
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [attachment2]>
+
+B
+ALTER TABLE GAMES
+INSERT INTO GAMES(STATUS) VALUES ('AVAILABLE') WHERE GameID = 101;
+

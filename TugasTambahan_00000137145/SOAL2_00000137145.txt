@@ -1,0 +1,124 @@
+A
+MariaDB [attachment2]> alter table games
+    -> add column status varchar(40);
+Query OK, 0 rows affected (0.017 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+B 
+MariaDB [attachment2]>  UPDATE games set status = 'available'
+    -> WHERE GameID = '102';
+Query OK, 1 row affected (0.008 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [attachment2]> UPDATE games set status = 'available'
+    -> WHERE GameID = '101';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [attachment2]> UPDATE games set status = 'available'
+    -> WHERE GameID = '107';
+Query OK, 1 row affected (0.008 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [attachment2]> UPDATE games set status = 'available'
+    -> WHERE GameID = '108';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [attachment2]> UPDATE games set status = 'available'
+    -> WHERE GameID = '104';
+Query OK, 1 row affected (0.008 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [attachment2]> UPDATE games set status = 'available'
+    -> WHERE GameID = '106';
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [attachment2]> update games set status = 'borrowed'
+    ->  WHERE STATUS IS NULL;
+Query OK, 4 rows affected (0.009 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+c
+MariaDB [attachment2]> UPDATE designers SET nationality = 'Rongawi Kuno'
+    -> WHERE designerid = 203;
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+D
+MariaDB [attachment2]> select r.memberId AS MEMBER, m.membername AS NAMA_MEMBER, r.gameID AS GAMEID, g.title AS TITLE
+    -> from rentals r
+    -> join games g on r.gameID = g.gameID
+    -> join members m on r.memberid = m.memberid;
++--------+-----------------+--------+-----------------------------+
+| MEMBER | NAMA_MEMBER     | GAMEID | TITLE                       |
++--------+-----------------+--------+-----------------------------+
+|      1 | Nadia Kusnadi   |    101 | Saudagar Batik Rongawi      |
+|      1 | Nadia Kusnadi   |    104 | Juragan Rempah Jalur Ngawi  |
+|      1 | Nadia Kusnadi   |    102 | Rebutan Soto Blakatak       |
+|      1 | Nadia Kusnadi   |    106 | Kopi Tempo Doeloe           |
+|      2 | Rizky Ramadhan  |    102 | Rebutan Soto Blakatak       |
+|      2 | Rizky Ramadhan  |    106 | Kopi Tempo Doeloe           |
+|      2 | Rizky Ramadhan  |    104 | Juragan Rempah Jalur Ngawi  |
+|      2 | Rizky Ramadhan  |    108 | Bajak Laut Piksel           |
+|      3 | Tiara Handoko   |    106 | Kopi Tempo Doeloe           |
+|      3 | Tiara Handoko   |    101 | Saudagar Batik Rongawi      |
+|      3 | Tiara Handoko   |    105 | Maling Genteng Ngawi        |
+|      3 | Tiara Handoko   |    104 | Juragan Rempah Jalur Ngawi  |
+|      4 | Yoga Prakoso    |    105 | Maling Genteng Ngawi        |
+|      4 | Yoga Prakoso    |    108 | Bajak Laut Piksel           |
+|      4 | Yoga Prakoso    |    101 | Saudagar Batik Rongawi      |
+|      4 | Yoga Prakoso    |    106 | Kopi Tempo Doeloe           |
+|      5 | Melati Sasongko |    103 | Benteng Bisikan Rongawi     |
+|      5 | Melati Sasongko |    106 | Kopi Tempo Doeloe           |
+|      5 | Melati Sasongko |    107 | Pelabuhan Lampion           |
+|      5 | Melati Sasongko |    109 | Misteri Stasiun Lempuyangan |
++--------+-----------------+--------+-----------------------------+
+20 rows in set (0.001 sec)
+
+E
+MariaDB [attachment2]> select r.gameID as gameID, g.title AS TITLE_BorrowedMoreThan1, count(r.gameId) AS Jumlah_Pinjam
+    -> from rentals r
+    -> join games g on r.gameID = g.gameID
+    -> group by r.gameID
+    -> having Jumlah_Pinjam > 1;
++--------+----------------------------+---------------+
+| gameID | TITLE_BorrowedMoreThan1    | Jumlah_Pinjam |
++--------+----------------------------+---------------+
+|    101 | Saudagar Batik Rongawi     |             3 |
+|    102 | Rebutan Soto Blakatak      |             2 |
+|    104 | Juragan Rempah Jalur Ngawi |             3 |
+|    105 | Maling Genteng Ngawi       |             2 |
+|    106 | Kopi Tempo Doeloe          |             5 |
+|    108 | Bajak Laut Piksel          |             2 |
++--------+----------------------------+---------------+
+6 rows in set (0.001 sec)
+
+F
+MariaDB [attachment2]> select r.gameid as gameID, m.membername AS Member_Yang_Telah_Meminjam, d.designername AS DESIGNERS
+    -> from rentals r
+    -> join members m on r.memberid = m.memberid
+    -> join gamedesigners g on r.gameid = g.gameid
+    -> join designers d on g.designerid = d.designerid
+    -> WHERE d.nationality = 'Indonesia';
++--------+----------------------------+-----------------+
+| gameID | Member_Yang_Telah_Meminjam | DESIGNERS       |
++--------+----------------------------+-----------------+
+|    101 | Nadia Kusnadi              | Rara Anindita   |
+|    101 | Tiara Handoko              | Rara Anindita   |
+|    101 | Yoga Prakoso               | Rara Anindita   |
+|    104 | Nadia Kusnadi              | Rara Anindita   |
+|    104 | Rizky Ramadhan             | Rara Anindita   |
+|    104 | Tiara Handoko              | Rara Anindita   |
+|    106 | Tiara Handoko              | Rara Anindita   |
+|    106 | Rizky Ramadhan             | Rara Anindita   |
+|    106 | Melati Sasongko            | Rara Anindita   |
+|    106 | Nadia Kusnadi              | Rara Anindita   |
+|    106 | Yoga Prakoso               | Rara Anindita   |
+|    105 | Yoga Prakoso               | Dimas Aryasatya |
+|    105 | Tiara Handoko              | Dimas Aryasatya |
+|    108 | Yoga Prakoso               | Dimas Aryasatya |
+|    108 | Rizky Ramadhan             | Dimas Aryasatya |
++--------+----------------------------+-----------------+
+15 rows in set (0.001 sec)
