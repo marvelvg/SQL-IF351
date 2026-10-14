@@ -1,0 +1,162 @@
+create table actors (
+	id varchar(5) primary key,
+	first_name varchar(15),
+	last_name varchar(15),
+	gender varchar(10),
+	birth_date date
+
+);
+
+create table movies (
+	id varchar(5) primary key,
+	name varchar(40),
+	year year,
+	rank float	
+);
+
+create table roles (
+	actor_id varchar(10) references actors(id),
+	movie_id varchar(10) references movies(id),
+	salary INT,
+	
+	primary key (actor_id, movie_id)
+);
+
+alter table roles
+add column role varchar(40) AFTER movie_id;
+
+INSERT INTO actors VALUES
+('A0001','Nicholas','Cage','M','1964-01-07'),
+('A0002','Dwayne','Johnson','M','1972-05-02'),
+('A0003','Diane','Kruger','F','1976-07-15'),
+('A0004','Jay','Baruchel','M','1982-04-09'),
+('A0005','Josh','Hutcherson','M','1992-10-12'),
+('A0006','Teresa','Palmer','F','1986-02-26'),
+('A0007','Alexander','Ludwig','M','1992-05-07'),
+('A0008','Vanessa','Hudgens','F','1988-12-14'),
+('A0009','Ryan','Sheckler','M','1989-12-30'),
+('A0010','Jennifer','Lawrence','F','1990-08-15'),
+('A0011','Ben','Stiller','M','1965-11-30'),
+('A0012','AnnaSophia','Robb','F','1993-12-08'),
+('A0013','Dan','Stevens','M','1982-10-10'),
+('A0014','Dylan','O''Brien','M','1990-08-26'),          
+('A0015','Thomas','Brodie-Sangster','M','1990-05-16');
+
+
+INSERT INTO roles VALUES
+('A0001','M0001','Balthazar Blake',2000000),
+('A0001','M0003','Benjamin Franklin Gates',2500000),
+('A0002','M0004','Jack Bruno',2200000),
+('A0002','M0005','Derek Thompson',2800000),
+('A0002','M0006','Hank Parsons',3000000),
+('A0003','M0003','Abigail Chase',1900000),
+('A0004','M0001','David Stutler',1000000),
+('A0005','M0002','Peeta Mellark',2100000),
+('A0005','M0006','Sean Anderson',1700000),
+('A0006','M0001','Rebecca Barnes',900000),
+('A0007','M0002','Cato',2000000),
+('A0007','M0004','Seth',1800000),
+('A0008','M0006','Kailani',2100000),
+('A0009','M0005','Mick Donnelly',1600000),
+('A0010','M0002','Katniss Everdeen',2500000),
+('A0011','M0007','Larry Daley',2300000),
+('A0012','M0004','Sara',1500000),
+('A0013','M0007','Sir Lancelot',1900000);
+
+select role, salary 
+from roles
+where salary > (select avg(salary) from roles);
+
+select distinct(concat(a.first_name,' ', coalesce(a.last_name, ''))) AS NAMA 
+from actors a 
+left join roles r on a.id = r.actor_id
+where r.actor_id is NULL;
+
+Tampilkan setiap role, salary, dan selisihnya dengan rata-rata gaji. Subquery ada di SELECT. (18 baris)
+
+select role, SUM(salary - avg(salary)) AS SELISIH_GAJI from roles;
+
+
+**Subquery ANY / ALL**
+select role, salary, movie_id 
+from roles 
+where salary > ALL(select salary from roles where movie_id = 'M0001');
+
+select concat(first_name, ' ', coalesce(last_name)) AS NAMA, gender
+from actors
+where birth_date > any(select birth_date from actors where gender = 'F');
+
+
+select * from roles order by salary desc limit 5;
+
+select concat(a.first_name, ' ', a.last_name) AS NAMA, sum(r.salary) AS SALARY
+from actors a
+join roles r on a.id = r.actor_id
+group by NAMA
+having SALARY > 4000000;
+
+select concat(first_name, ' ', last_name) AS NAMA, birth_date AS DATE
+from actors
+where gender = 'M'
+UNION 
+select concat(first_name, ' ', last_name) AS NAMA, birth_date AS DATE
+from actors 
+group by NAMA
+having YEAR(birth_date) < 1980;
+
+
+create table calon(
+	id_calon varchar(20) primary key,
+	nama_calon varchar(30)
+);
+
+create table vote(
+	id_calon varchar(20) references calon(id_calon)
+,
+	id_pemilih varchar(30) references pemilih(id_pemilih),
+
+	primary key (id_calon, id_pemilih));
+
+create table pemilih(
+	id_pemilih varchar(20) primary key,
+	nama_pemilih varchar(30),
+	nomor_telepon_penduduk varchar(30)
+);
+
+
+insert into calon(id_calon, nama_calon)
+VALUES('PR001', 'Dennis Wicaksana'),
+('PR002', 'Arya Gunawan');
+
+
+insert into vote(id_calon, id_pemilih)
+VALUES ('PR001', 'PD001'),
+('PR001', 'PD002'),
+('PR001', 'PD004'),
+('PR002', 'PD003'),
+('PR002', 'PD005');
+
+insert into pemilih(id_pemilih, nama_pemilih, nomor_telepon_penduduk)
+VALUES('PD001', 'Anna', '2031203'),
+('PD002', 'Sukijah', '2031223'),
+('PD004', 'Kiri', '2033012'),
+('PD003', 'Kana', '2334059'),
+('PD005', 'Okta', '9332333');
+
+
+select p.nama_pemilih AS NAMA, c.nama_calon AS NAMA_PEMILIH
+from pemilih p
+join vote v on p.id_pemilih = v.id_pemilih
+join calon c on v.id_calon = c.id_calon
+group by p.nama_pemilih;
+
+
+create table pesanan(
+	pesanan_id varchar(30) primary key,
+	menu varchar(30)
+);
+
+insert into pesanan(pesanan_id, menu)
+values('1', 'Ayam'),
+('1', 'Uduk'),
+('1', 'Goreng');
