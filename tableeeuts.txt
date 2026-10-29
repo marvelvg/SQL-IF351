@@ -1,0 +1,92 @@
+create table secretary(
+     secid varchar(30) primary key,
+     secname varchar(30),
+     secoffice varchar(30)
+);
+
+create table professor(
+	pid varchar(30),
+	pname varchar(30),
+	poffice varchar(30),
+	psec varchar(30),
+
+	key (psec),
+	primary key(pid)
+);
+
+create table student(
+	sid varchar(30) primary key,
+	soffice varchar(30),
+	scoffeemaker varchar(30),
+
+	key(scoffeemaker)
+
+);
+
+create table coffeemaker(
+	cmid varchar(30) primary key,
+  	cmbrand varchar(30),
+ 	cmowner varchar(30),
+	key(cmowner)
+ );
+
+create table workfor(
+ 	sid varchar(30),
+ 	pid varchar(30)
+);
+
+ALTER TABLE professor
+ADD FOREIGN KEY (psec) REFERENCES secretary(secid);
+
+ALTER TABLE student
+ ADD FOREIGN KEY (scoffeemaker) REFERENCES coffeemaker(cmid);
+
+ALTER TABLE coffeemaker
+ADD FOREIGN KEY (cmowner) REFERENCES professor(pid);
+
+ALTER TABLE workfor
+    add FOREIGN KEY (sid) REFERENCES student(sid);
+
+create table office(
+ 	studentshareoffice_id varchar(30),
+ 	professoroffice_id varchar(30),
+ 	secretaryoffice_id varchar(30)
+);
+
+insert into student(sid, sname, soffice)
+values('0001', 'Andi', '201'),
+('0002', 'Andi', '202'),
+('0003', 'rendi', '203'),
+('0004', 'Budi', '204'),
+('0005', 'Didi', '205'),
+('0006', 'Kadi', '206'),
+('0007', 'Adi', '207'),
+('0008', 'Ani', '208'),
+('0009', 'Sandi', '209'),
+('0010', 'Pandi', '210');
+
+INSERT INTO professor(pid, pname, poffice)
+values('P001', 'Nanda', 'I001'),
+('P002', 'Degun', 'I002'),
+('P003', 'Eka', 'I003');
+
+INSERT INTO professor(pid, pname, poffice)
+values('P001', 'Nanda', 'I001'),
+('P002', 'Degun', 'I002'),
+('P003', 'Eka', 'I003');
+
+insert into secretary(secid, secname, secoffice)
+values('S001', 'Claudio', 'O001');
+
+insert into secretary(secid, secname, secoffice)
+values('S002', 'Gema', 'O002');
+
+update professor
+set psec = 'S001' WHERE pid = 'P001';
+
+update professor
+set psec = 'S002' WHERE pid = 'P002';
+
+update student set soffice = '201';
+
+update coffeemaker set cmowner = 'P001';
