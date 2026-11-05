@@ -417,21 +417,158 @@ MariaDB [ikea]> select  concat(e.FirstName, ' ', coalesce(e.LastName, '')) AS Ka
 +------------------+--------------+--------+
 4 rows in set (0.001 sec)
 
-select  concat(
-RPAD(concat(e.FirstName, ' ', coalesce(e.LastName, '')), 40, ' '),
+MariaDB [ikea]> select  concat(
+    -> RPAD(concat(e.FirstName, ' ', coalesce(e.LastName, '')), 40, ' '),
+    -> RPAD(
+    ->  CONCAT(
+    ->  (CASE WHEN LEFT(j.JobDesc, 1) IN ('A' , 'I' , 'U' , 'E' , 'O') THEN 'work as a '
+    ->  ELSE 'work as an '
+    ->  END)
+    ->  ,
+    -> j.JobDesc), 50, ' '),
+    ->
+    -> RPAD(CONCAT(' In ', d.DeptName, ' Department'), 30, ' ')
+    -> ) AS 'Employee Information'
+    -> from employees e
+    ->
+    -> join jobs j on e.JobID = j.JobID
+    -> join depts d on d.DeptID = e.DeptID
+    -> ORDER BY j.JobDesc, d.DeptName, concat(e.FirstName, ' ', coalesce(e.LastName, ''))
+    -> ;
++--------------------------------------------------------------------------------------------------------------------------+
+| Employee Information                                                                                                     |
++--------------------------------------------------------------------------------------------------------------------------+
+| Pete Cain                               work as an Communication and Interior Design       In Small Storage Department   |
+| Mildred Sanders                         work as an Customer Relations                      In Bathroom Department        |
+| Maurice Ford                            work as an Customer Relations                      In Decoration Department      |
+| Alfredo Cooper                          work as an Customer Relations                      In Dining Department          |
+| Kendra Jonston                          work as an Customer Relations                      In Lighting Department        |
+| Camille Edwards                         work as an Customer Relations                      In Living Room Department     |
+| Santago Goodwin                         work as an Customer Relations                      In Living Room Department     |
+| Cecil Wade                              work as an Customer Relations                      In METOD Kitchen Department   |
+| Vellma Carr                             work as an Customer Relations                      In Secondary Storage Departme |
+| Mindy Cannon                            work as an Customer Relations                      In Workspaces Department      |
+| Leticia Hampton                         work as an Finance and Business Navigation         In Laundry Department         |
+| Christine Ingram                        work as an Human Resource                          In Hallway Department         |
+| Cary Santiago                           work as an Human Resource                          In Lighting Department        |
+| Aaron Moreno                            work as an Human Resource                          In METOD Kitchen Department   |
+| Leah Caldwell                           work as an Human Resource                          In Outdoor Department         |
+| Alice Fields                            work as an Human Resource                          In Small Storage Department   |
+| Ignacio Richardson                      work as a IT                                       In Bedroom Department         |
+| Irma Luna                               work as a IT                                       In Cooking Department         |
+| Jeremy Evan                             work as a IT                                       In METOD Kitchen Department   |
+| Spencer Watts                           work as a IT                                       In Workspaces Department      |
+| Jim Love                                work as an Logistics                               In Bedroom Department         |
+| Leah Webber                             work as an Logistics                               In Children's IKEA Department |
+| Ted Stokes                              work as an Logistics                               In METOD Kitchen Department   |
+| Olga Barrett                            work as an Logistics                               In Textiles & Rugs Department |
+| Dominicus Owen                          work as an Manager                                 In Cooking Department         |
+| Kevin Padawangi                         work as an Manager                                 In Foods & Beverages Departme |
+| Ivan Jeremy                             work as an Manager                                 In Secondary Storage Departme |
+| Estelle Burton                          work as an Marketing                               In Dining Department          |
+| Philip Burns                            work as an Marketing                               In METOD Kitchen Department   |
+| Jenna May                               work as an Marketing                               In Secondary Storage Departme |
+| Ruth Mitchell                           work as an Marketing                               In Textiles & Rugs Department |
+| Geranld Phelps                          work as an Restaurant (IKEA FOOD)                  In Foods & Beverages Departme |
+| Martha Mills                            work as an Restaurant (IKEA FOOD)                  In Foods & Beverages Departme |
+| Raul Diaz                               work as an Restaurant (IKEA FOOD)                  In Foods & Beverages Departme |
+| Paula Tuckers                           work as an Sales                                   In Children's IKEA Department |
+| Clay Young                              work as an Sales                                   In Decoration Department      |
+| Melanie Pierce                          work as an Sales                                   In Eating Department          |
+| Jan Long                                work as an Sales                                   In Hallway Department         |
+| Audrey Robertson                        work as an Sales                                   In Laundry Department         |
+| Wilma George                            work as an Sales                                   In METOD Kitchen Department   |
+| Sue Price                               work as an Sales                                   In Outdoor Department         |
++--------------------------------------------------------------------------------------------------------------------------+
+41 rows in set (0.002 sec)
 
-RPAD(
- CONCAT(
-	(CASE WHEN LEFT(j.JobDesc, 1) IN ('A' , 'I' , 'U' , 'E' , 'O') THEN 'work as a '
-	ELSE 'work as an '
-	END)
-	, 
-j.JobDesc), 30, ' '),
+MariaDB [ikea]> set @@autocommit = 0;
+Query OK, 0 rows affected (0.001 sec)
 
-LPAD(CONCAT(' In ', d.DeptName, ' Department'), 30, ' ')
-) AS 'Employee Information'
-from employees e
+MariaDB [ikea]> START TRANSACTION;
+Query OK, 0 rows affected (0.000 sec)
 
-join jobs j on e.JobID = j.JobID
-join depts d on d.DeptID = e.DeptID
-;
+MariaDB [ikea]> UPDATE jobs SET SALARY = 0; 
+Query OK, 10 rows affected (0.004 sec)
+
+MariaDB [ikea]> select salary from jobs;
++--------+
+| salary |
++--------+
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
+|      0 |
++--------+
+10 rows in set (0.004 sec)
+
+
+MariaDB [ikea]> SAVEPOINT ikea_gaji_nol;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [ikea]> update employees set FirstName = 'Tommy';
+Query OK, 42 rows affected (3.007 sec)
+Rows matched: 42  Changed: 42  Warnings: 0
+
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [ikea]> select FirstName from Employees;
++-----------+
+| FirstName |
++-----------+
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
+| Tommy     |
++-----------+
+42 rows in set (0.001 sec)
+
+MariaDB [ikea]> ROLLBACK TO ikea_gaji_nol;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [ikea]> ROLLBACK;
+Query OK, 0 rows affected (0.003 sec)

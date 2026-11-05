@@ -1,0 +1,437 @@
+select
+concat(e.firstname, ' ', coalesce(e.lastname, ' ')) AS Nama,
+d.DeptName as Department 
+from depts d
+join employees e on e.DeptID = d.deptid
+order by Nama, Department;
+
+MariaDB [ikea]> select
+    -> concat(e.firstname, coalesce(e.lastname, ' ')) AS Nama,
+    -> d.DeptName as Department
+    -> from depts d
+    -> join employees e on e.DeptID = d.deptid
+    -> order by Nama, Department;
++-------------------+-------------------+
+| Nama              | Department        |
++-------------------+-------------------+
+| AaronMoreno       | METOD Kitchen     |
+| AlfredoCooper     | Dining            |
+| AliceFields       | Small Storage     |
+| AudreyRobertson   | Laundry           |
+| CamilleEdwards    | Living Room       |
+| CarySantiago      | Lighting          |
+| CecilWade         | METOD Kitchen     |
+| ChristineIngram   | Hallway           |
+| ClayYoung         | Decoration        |
+| DominicusOwen     | Cooking           |
+| EstelleBurton     | Dining            |
+| GeranldPhelps     | Foods & Beverages |
+| IgnacioRichardson | Bedroom           |
+| IrmaLuna          | Cooking           |
+| IvanJeremy        | Secondary Storage |
+| JanLong           | Hallway           |
+| JennaMay          | Secondary Storage |
+| JeremyEvan        | METOD Kitchen     |
+| JimLove           | Bedroom           |
+| KendraJonston     | Lighting          |
+| KevinPadawangi    | Foods & Beverages |
+| LeahCaldwell      | Outdoor           |
+| LeahWebber        | Children's IKEA   |
+| LeticiaHampton    | Laundry           |
+| MarthaMills       | Foods & Beverages |
+| MauriceFord       | Decoration        |
+| MelaniePierce     | Eating            |
+| MildredSanders    | Bathroom          |
+| MindyCannon       | Workspaces        |
+| OlgaBarrett       | Textiles & Rugs   |
+| PaulaTuckers      | Children's IKEA   |
+| PeteCain          | Small Storage     |
+| PhilipBurns       | METOD Kitchen     |
+| RaulDiaz          | Foods & Beverages |
+| RuthMitchell      | Textiles & Rugs   |
+| SantagoGoodwin    | Living Room       |
+| SpencerWatts      | Workspaces        |
+| SuePrice          | Outdoor           |
+| TedStokes         | METOD Kitchen     |
+| VellmaCarr        | Secondary Storage |
+| WilmaGeorge       | METOD Kitchen     |
++-------------------+-------------------+
+41 rows in set (0.014 sec)
+
+MariaDB [ikea]> select
+    -> concat(e.firstname, ' ', coalesce(e.lastname, ' ')) AS Nama,
+    -> d.DeptName as Department
+    -> from depts d
+    -> join employees e on e.DeptID = d.deptid
+    -> order by Nama, Department;
++--------------------+-------------------+
+| Nama               | Department        |
++--------------------+-------------------+
+| Aaron Moreno       | METOD Kitchen     |
+| Alfredo Cooper     | Dining            |
+| Alice Fields       | Small Storage     |
+| Audrey Robertson   | Laundry           |
+| Camille Edwards    | Living Room       |
+| Cary Santiago      | Lighting          |
+| Cecil Wade         | METOD Kitchen     |
+| Christine Ingram   | Hallway           |
+| Clay Young         | Decoration        |
+| Dominicus Owen     | Cooking           |
+| Estelle Burton     | Dining            |
+| Geranld Phelps     | Foods & Beverages |
+| Ignacio Richardson | Bedroom           |
+| Irma Luna          | Cooking           |
+| Ivan Jeremy        | Secondary Storage |
+| Jan Long           | Hallway           |
+| Jenna May          | Secondary Storage |
+| Jeremy Evan        | METOD Kitchen     |
+| Jim Love           | Bedroom           |
+| Kendra Jonston     | Lighting          |
+| Kevin Padawangi    | Foods & Beverages |
+| Leah Caldwell      | Outdoor           |
+| Leah Webber        | Children's IKEA   |
+| Leticia Hampton    | Laundry           |
+| Martha Mills       | Foods & Beverages |
+| Maurice Ford       | Decoration        |
+| Melanie Pierce     | Eating            |
+| Mildred Sanders    | Bathroom          |
+| Mindy Cannon       | Workspaces        |
+| Olga Barrett       | Textiles & Rugs   |
+| Paula Tuckers      | Children's IKEA   |
+| Pete Cain          | Small Storage     |
+| Philip Burns       | METOD Kitchen     |
+| Raul Diaz          | Foods & Beverages |
+| Ruth Mitchell      | Textiles & Rugs   |
+| Santago Goodwin    | Living Room       |
+| Spencer Watts      | Workspaces        |
+| Sue Price          | Outdoor           |
+| Ted Stokes         | METOD Kitchen     |
+| Vellma Carr        | Secondary Storage |
+| Wilma George       | METOD Kitchen     |
++--------------------+-------------------+
+41 rows in set (0.001 sec)
+
+MariaDB [ikea]> select concat(m.firstname, ' ', coalesce(m.lastname, '')) AS KARYAWAN,
+    -> concat(E.firstname, ' ', coalesce(e.lastname, '')) AS MANAGER
+    -> from employees e
+    -> join employees m on m.managerid = e.employeeid
+    -> ORDER BY MANAGER, KARYAWAN ASC;
++--------------------+-----------------+
+| KARYAWAN           | MANAGER         |
++--------------------+-----------------+
+| Ignacio Richardson | Dominicus Owen  |
+| Irma Luna          | Dominicus Owen  |
+| Jeremy Evan        | Dominicus Owen  |
+| Jim Love           | Dominicus Owen  |
+| Leah Webber        | Dominicus Owen  |
+| Maurice Ford       | Dominicus Owen  |
+| Olga Barrett       | Dominicus Owen  |
+| Spencer Watts      | Dominicus Owen  |
+| Ted Stokes         | Dominicus Owen  |
+| Alfredo Cooper     | Ivan Jeremy     |
+| Christine Ingram   | Ivan Jeremy     |
+| Jenna May          | Ivan Jeremy     |
+| Leticia Hampton    | Ivan Jeremy     |
+| Melanie Pierce     | Ivan Jeremy     |
+| Mindy Cannon       | Ivan Jeremy     |
+| Pete Cain          | Ivan Jeremy     |
+| Philip Burns       | Ivan Jeremy     |
+| Vellma Carr        | Ivan Jeremy     |
+| Aaron Moreno       | Kevin Alexander |
+| Camille Edwards    | Kevin Alexander |
+| Cary Santiago      | Kevin Alexander |
+| Clay Young         | Kevin Alexander |
+| Jan Long           | Kevin Alexander |
+| Kendra Jonston     | Kevin Alexander |
+| Leah Caldwell      | Kevin Alexander |
+| Paula Tuckers      | Kevin Alexander |
+| Ruth Mitchell      | Kevin Alexander |
+| Wilma George       | Kevin Alexander |
+| Alice Fields       | Kevin Padawangi |
+| Audrey Robertson   | Kevin Padawangi |
+| Cecil Wade         | Kevin Padawangi |
+| Estelle Burton     | Kevin Padawangi |
+| Martha Mills       | Kevin Padawangi |
+| Mildred Sanders    | Kevin Padawangi |
+| Raul Diaz          | Kevin Padawangi |
+| Santago Goodwin    | Kevin Padawangi |
+| Sue Price          | Kevin Padawangi |
++--------------------+-----------------+
+37 rows in set (0.002 sec)
+
+select concat(e.FirstName, ' ', coalesce(e.LastName, '')) AS NAMA, 
+group_concat(o.OrderID SEPARATOR ' - ') AS Pesanan
+
+from orders o
+join employees e on e.EmployeeID = o.EmployeeID
+group by NAMA 
+;
+
+MariaDB [ikea]> select
+    -> trim(p.ProductName) AS PRODUCT,
+    -> sum(od.qty) AS SALE
+    -> from products p
+    -> join orderdetails od on od.ArticleID = p.ArticleID
+    -> group by PRODUCT
+    -> HAVING SALE >= 1
+    -> ORDER BY SALE DESC;
++---------------------------------------+------+
+| PRODUCT                               | SALE |
++---------------------------------------+------+
+| BYGEL Container                       |   10 |
+| HORDA Open cabinet, wood effect       |    8 |
+| ATTEST Knob                           |    6 |
+| UTRSTA Door damper for hinge          |    4 |
+| EKER├ûN Seat/back cushion             |    4 |
+| MAXIMERA Divider for high drawer      |    4 |
+| ASKHOLMEN Balcony table               |    4 |
+| ERIKSDAL Handle                       |    3 |
+| ALBERT Shelving unit                  |    2 |
+| ANSLUTA Power supply cord             |    2 |
+| HENRIKSDAL Chair cover                |    2 |
+| ANSLUTA Intermediate connection cord  |    2 |
+| HODDE Rug                             |    1 |
+| BILLSTA Bar table                     |    1 |
+| FIXA Rear edge trim for worktop       |    1 |
+| KARLS├û Gazebo with curtains          |    1 |
+| LEIFARNE Seat shell                   |    1 |
+| ATLANT Pop-up drainer                 |    1 |
+| ├äPPLAR├û Sun lounger                |    1 |
+| KLASEN Charcoal barbecue              |    1 |
+| ARKELSTORP Sideboard                  |    1 |
+| ALGOT Wall upright/shelf/hook         |    1 |
+| ELVERDAM Kitchen mixer tap            |    1 |
+| BJURSTA Extendable table              |    1 |
+| TUNHOLMEN Table                       |    1 |
+| DYNING Canopy                         |    1 |
+| BLANKETT Handle                       |    1 |
+| BILLSTA Table top                     |    1 |
+| STORN├äS / KAUSTBY Table and 4 chairs |    1 |
++---------------------------------------+------+
+29 rows in set (0.001 sec)
+
+MariaDB [ikea]> select
+    -> trim(p.ProductName) AS PRODUCT,
+    -> coalesce(sum(od.qty), 0) AS SALE
+    -> from products p
+    -> left join orderdetails od on od.ArticleID = p.ArticleID
+    -> group by PRODUCT
+    -> ORDER BY SALE DESC;
++----------------------------------------------+------+
+| PRODUCT                                      | SALE |
++----------------------------------------------+------+
+| BYGEL Container                              |   10 |
+| HORDA Open cabinet, wood effect              |    8 |
+| ATTEST Knob                                  |    6 |
+| UTRSTA Door damper for hinge                 |    4 |
+| MAXIMERA Divider for high drawer             |    4 |
+| EKER├ûN Seat/back cushion                    |    4 |
+| ASKHOLMEN Balcony table                      |    4 |
+| ERIKSDAL Handle                              |    3 |
+| ALBERT Shelving unit                         |    2 |
+| ANSLUTA Power supply cord                    |    2 |
+| HENRIKSDAL Chair cover                       |    2 |
+| ANSLUTA Intermediate connection cord         |    2 |
+| DYNING Canopy                                |    1 |
+| ALGOT Wall upright/shelf/hook                |    1 |
+| KLASEN Charcoal barbecue                     |    1 |
+| STORN├äS / KAUSTBY Table and 4 chairs        |    1 |
+| BLANKETT Handle                              |    1 |
+| TUNHOLMEN Table                              |    1 |
+| FIXA Rear edge trim for worktop              |    1 |
+| BILLSTA Table top                            |    1 |
+| ELVERDAM Kitchen mixer tap                   |    1 |
+| KARLS├û Gazebo with curtains                 |    1 |
+| LEIFARNE Seat shell                          |    1 |
+| ARKELSTORP Sideboard                         |    1 |
+| ├äPPLAR├û Sun lounger                       |    1 |
+| HODDE Rug                                    |    1 |
+| BILLSTA Bar table                            |    1 |
+| ATLANT Pop-up drainer                        |    1 |
+| BJURSTA Extendable table                     |    1 |
+| ├äPPLAR├û Gazebo                             |    0 |
+| BEKVAM Step stool                            |    0 |
+| H├àLL├û Chair cushion                       |    0 |
+| OPLEV Door mat                               |    0 |
+| Tasty ice cream                              |    0 |
+| T├àSINGE Bench cushion                       |    0 |
+| Salmon Salad                                 |    0 |
+| Kids Pasta                                   |    0 |
+| VEDDINGE Door                                |    0 |
+| JANINGE Bar stool                            |    0 |
+| BOTKYRKA Wall shelf                          |    0 |
+| SKRUV Extension cable                        |    0 |
+| KLASEN Charcoal barbecue with trolley        |    0 |
+| JOSEF Cabinet in/outdoor                     |    0 |
+| FORMAT LED cabinet lighting                  |    0 |
+| AMMER├û Gazebo                               |    0 |
+| SKRUV Transformer/cord/3-way connector       |    0 |
+| ANATOL Brackets for microwave oven           |    0 |
+| ANSLUTA Electronic transformer               |    0 |
+| APPLARO Chair with armrests                  |    0 |
+| FRODE Folding chair                          |    0 |
+| GRUNDTAL Kitchen trolley                     |    0 |
+| FIXA Connectors for insert sink/hob          |    0 |
+| METOD Corner wall cab w carousel/glass dr    |    0 |
+| BEKVAM Kitchen trolley                       |    0 |
+| SANDSJON Single-lever kitchen mixer tap      |    0 |
+| DETOLF Glass-door cabinet                    |    0 |
+| KUNGSHOLMEN / KUNGS├û 2-seat sofa            |    0 |
+| Godis Julkola                                |    0 |
+| EKER├ûN Chair cushion                        |    0 |
+| INGOLF Stool                                 |    0 |
+| BACKARYD Underframe                          |    0 |
+| JANINGE Chair with armrests                  |    0 |
+| ALESKAR Kitchen mixer tap with handspray     |    0 |
+| TARNO Chair                                  |    0 |
+| L├äCK├û Shelving unit                        |    0 |
+| ALGOT Wall upright/shelf/basket              |    0 |
+| ALGOT Wall upright/basket                    |    0 |
+| UTRUSTA Cleaning interior                    |    0 |
+| FYNDIG Base cabinet w door and drawer        |    0 |
+| BRORINGE Underframe                          |    0 |
+| FIXA Worktop cover strip                     |    0 |
+| Godis Snogubbe                               |    0 |
+| SKRUV Transformer with cord                  |    0 |
+| KLASEN Trolley                               |    0 |
+| HEMNES Console table                         |    0 |
+| ├äPPLAR├û Table/stool section               |    0 |
+| FYNDIG Wall cabinet with doors               |    0 |
+| Smoked Salmon                                |    0 |
+| FYNDIG Base cabinet with doors               |    0 |
+| BRUSALI Cabinet with doors                   |    0 |
+| BAGG├ûN Parasol                              |    0 |
+| BOHOLMEN 1 1/2 bowl insert sink with drainer |    0 |
+| GAMLEBY Wall shelf                           |    0 |
+| SKRUV LED lighting chain with 48 lights      |    0 |
+| Cinnamon Bun                                 |    0 |
+| FASTBO Rail for wall panel                   |    0 |
+| ├äPPLAR├û Bench w panel+ shelves            |    0 |
+| FYNDIG Base cabinet for oven                 |    0 |
+| ATTEST Handle                                |    0 |
+| UTRUSTA Pull-out waste sorting tray          |    0 |
+| FROSTA Stool                                 |    0 |
+| METOD Base cab 4 frnts/4 drawers             |    0 |
+| HYLLIS Shelving unit                         |    0 |
+| NORBERG Wall-mounted drop-leaf table         |    0 |
+| BEKVAM Spice rack                            |    0 |
+| FLYTTA Kitchen trolley                       |    0 |
+| IKEA PS V├àG├û Easy chair                    |    0 |
+| RINGHULT Drawer front                        |    0 |
+| Kanelbullar                                  |    0 |
+| V├äRUM Rug                                   |    0 |
+| ANSLUTA Remote control                       |    0 |
+| Pepparkaka figurer                           |    0 |
+| FORVARA Drawer                               |    0 |
+| FORHOJA Kitchen trolley                      |    0 |
+| Kaka Chokladtryffel                          |    0 |
+| FRED├ûN Hammock                              |    0 |
+| Chicken Hot dog                              |    0 |
+| FASTBO Wall panel                            |    0 |
+| INGATORP / STEFAN Table and 2 chairs         |    0 |
+| Swedish Poached Salmon                       |    0 |
+| S├äR├û Chair cushion                         |    0 |
+| FYNDIG Wall cabinet with door                |    0 |
+| LILL├ûN Charcoal barbecue                    |    0 |
+| INGATORP / HENRIKSDAL Table and 2 chairs     |    0 |
+| BACKARYD / RYDEB├äCK Table                   |    0 |
+| FALSTER Table+4 chairs w armrests            |    0 |
+| VINDALS├û Trolley                            |    0 |
+| SOLARVET LED lighting chain with 12 lights   |    0 |
+| Swedish Apple Cake                           |    0 |
+| Select of drinks                             |    0 |
+| RUNNEN Floor decking                         |    0 |
+| MORUM Rug                                    |    0 |
+| EKBACKEN Worktop                             |    0 |
+| BILLSTA Rectangular underframe               |    0 |
+| TOSTERUP Handle                              |    0 |
+| ├äPPLAR├û Drop-leaf table                    |    0 |
+| BYGEL Trolley                                |    0 |
+| BERGSTENA Worktop                            |    0 |
+| GAMLEBY Chair                                |    0 |
+| BACKARYD / OPPEBY Table                      |    0 |
++----------------------------------------------+------+
+130 rows in set (0.003 sec)
+
+MariaDB [ikea]> select
+    -> o.OrderID AS 'ORDER ID',
+    -> sum(p.price * o.Qty) AS TOTAL,
+    -> concat(e.FirstName, ' ', coalesce(e.LastName, '')) AS NAMA
+    ->
+    -> from orderdetails o
+    -> join products p on p.ArticleID = o.ArticleID
+    -> join orders s on s.OrderID = o.OrderID
+    -> join employees e on e.EmployeeID = s.EmployeeID
+    -> group by o.OrderID
+    -> order by NAMA ASC
+    -> ;
++----------+----------+------------------+
+| ORDER ID | TOTAL    | NAMA             |
++----------+----------+------------------+
+| OR001    |   873000 | Alfredo Cooper   |
+| OR017    |   475000 | Alfredo Cooper   |
+| OR015    |  2624000 | Audrey Robertson |
+| OR020    | 11779000 | Audrey Robertson |
+| OR009    |  1799000 | Audrey Robertson |
+| OR002    |  1380000 | Camille Edwards  |
+| OR011    |  2175000 | Cecil Wade       |
+| OR014    |   475000 | Clay Young       |
+| OR018    |   449000 | Clay Young       |
+| OR007    |  5997000 | Jan Long         |
+| OR013    |  1700000 | Kendra Jonston   |
+| OR006    |   495000 | Maurice Ford     |
+| OR005    |  2945000 | Melanie Pierce   |
+| OR019    |  8797000 | Mildred Sanders  |
+| OR003    |  4999000 | Mindy Cannon     |
+| OR016    |  2149000 | Mindy Cannon     |
+| OR004    |   498000 | Paula Tuckers    |
+| OR008    |  3975000 | Santago Goodwin  |
+| OR010    |   799000 | Vellma Carr      |
+| OR012    |   449000 | Wilma George     |
++----------+----------+------------------+
+20 rows in set (0.002 sec)
+
+
+MariaDB [ikea]> select  concat(e.FirstName, ' ', coalesce(e.LastName, '')) AS Karyawan,
+    -> round(sum((od.price) * 0.12)) AS Contribution,
+    -> round((j.salary * 0.05)) AS BONUS
+    ->
+    ->
+    -> from employees e
+    -> join jobs j on j.JobID = e.JobID
+    -> join orders o on o.EmployeeID = e.EmployeeID
+    -> join orderdetails od on o.OrderID = od.OrderID
+    ->
+    -> group by e.EmployeeID
+    -> having Contribution > 500000
+    ->
+    -> order by contribution desc
+    -> ;
++------------------+--------------+--------+
+| Karyawan         | Contribution | BONUS  |
++------------------+--------------+--------+
+| Audrey Robertson |      1944240 | 287500 |
+| Mildred Sanders  |      1055640 | 300000 |
+| Mindy Cannon     |       857760 | 300000 |
+| Jan Long         |       719640 | 287500 |
++------------------+--------------+--------+
+4 rows in set (0.001 sec)
+
+select  concat(
+RPAD(concat(e.FirstName, ' ', coalesce(e.LastName, '')), 40, ' '),
+
+RPAD(
+ CONCAT(
+	(CASE WHEN LEFT(j.JobDesc, 1) IN ('A' , 'I' , 'U' , 'E' , 'O') THEN 'work as a '
+	ELSE 'work as an '
+	END)
+	, 
+j.JobDesc), 30, ' '),
+
+LPAD(CONCAT(' In ', d.DeptName, ' Department'), 30, ' ')
+) AS 'Employee Information'
+from employees e
+
+join jobs j on e.JobID = j.JobID
+join depts d on d.DeptID = e.DeptID
+;
