@@ -4,16 +4,53 @@ SOAL 1 - PROCEDURE DISCOUNT
 
 DELIMITER //
 
-CREATE PROCEDURE diskon(IN person INT)
+CREATE PROCEDURE diskon(IN percentage INT)
 BEGIN
 	SELECT 
-		p.ProductName AS PRODUCT
-		
+		p.ProductName AS PRODUCT,
+		CONCAT('Rp. ', ROUND(SUM(p.Price - p.Price * (percentage/100)))) AS HARGA
 	FROM products p
-	LEFT JOIN forderdetails f ON f.ArticleID = p.ArticleID
-	GROUP BY PRODUCT;
 
+	GROUP BY PRODUCT
+	ORDER BY Price
+	LIMIT 10;
+END//
+DELIMITER ;
 
+OUTPUT : 
+MariaDB [ikea]> DELIMITER //
+MariaDB [ikea]> CREATE PROCEDURE diskon(IN percentage INT)
+    -> BEGIN
+    ->  SELECT
+    ->          p.ProductName AS PRODUCT,
+    ->          CONCAT('Rp. ', ROUND(SUM(p.Price - p.Price * (percentage/100)))) AS HARGA
+    ->  FROM products p
+    ->
+    ->  GROUP BY PRODUCT
+    ->  ORDER BY Price
+    ->  LIMIT 10;
+    -> END//
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [ikea]> DELIMITER ;
+MariaDB [ikea]> CALL diskon(50);
++--------------------+-----------+
+| PRODUCT            | HARGA     |
++--------------------+-----------+
+| Tasty ice cream    | Rp. 2000  |
+| Select of drinks   | Rp. 3500  |
+| Chicken Hot dog    | Rp. 4000  |
+| BYGEL Container    | Rp. 4950  |
+| Kids Pasta         | Rp. 5000  |
+| Cinnamon Bun       | Rp. 7000  |
+| Godis Snogubbe     | Rp. 10000 |
+| Pepparkaka figurer | Rp. 10000 |
+| Swedish Apple Cake | Rp. 12500 |
+| Salmon Salad       | Rp. 17500 |
++--------------------+-----------+
+10 rows in set (0.008 sec)
+
+Query OK, 0 rows affected (0.024 sec)
 
 SOAL 2 - COUNTING GAME
 
@@ -21,3 +58,6 @@ SOAL 2 - COUNTING GAME
 SOAL 3 - PRIMA CHECK
 
 SOAL 4 - BOX/WINDOW/FIELD 
+
+
+
