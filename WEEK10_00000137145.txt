@@ -2,6 +2,18 @@ SQL - WEEK 10
 
 SOAL 1 - PROCEDURE DISCOUNT 
 
+DELIMITER //
+
+CREATE PROCEDURE diskon(IN person INT)
+BEGIN
+	SELECT 
+		p.ProductName AS PRODUCT
+		
+	FROM products p
+	LEFT JOIN forderdetails f ON f.ArticleID = p.ArticleID
+	GROUP BY PRODUCT;
+
+
 
 SOAL 2 - COUNTING GAME
 
