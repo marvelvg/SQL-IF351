@@ -54,8 +54,37 @@ Query OK, 0 rows affected (0.024 sec)
 
 SOAL 2 - COUNTING GAME
 
+Delimiter //
+CREATE PROCEDURE hitung(IN word VARCHAR(20))
+		BEGIN 
+			SELECT CHAR_LENGTH(word) AS TOTAL;
+		END //
+DELIMITER ; 
+
+OUTPUT
+
+MariaDB [ikea]> Delimiter //
+MariaDB [ikea]> CREATE PROCEDURE hitung(IN word VARCHAR(20))
+    ->          BEGIN
+    ->                  SELECT CHAR_LENGTH(word) AS TOTAL;
+    ->          END //
+Query OK, 0 rows affected (0.003 sec)
+MariaDB [ikea]> DELIMITER ;
+MariaDB [ikea]> CALL hitung('woi');
++-------+
+| TOTAL |
++-------+
+|     3 |
++-------+
 
 SOAL 3 - PRIMA CHECK
+DELIMITER // 
+		CREATE PROCEDURE cekPrima(number INT)
+			BEGIN
+				
+			END //
+DELIMITER ;
+
 
 SOAL 4 - BOX/WINDOW/FIELD 
 
