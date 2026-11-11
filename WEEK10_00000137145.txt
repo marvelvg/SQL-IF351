@@ -54,39 +54,209 @@ Query OK, 0 rows affected (0.024 sec)
 
 SOAL 2 - COUNTING GAME
 
-Delimiter //
-CREATE PROCEDURE hitung(IN word VARCHAR(20))
-		BEGIN 
-			SELECT CHAR_LENGTH(word) AS TOTAL;
-		END //
-DELIMITER ; 
+MELO SUKA CEWE - MELOSUKACEWE
+
+DELIMITER //
+
+CREATE PROCEDURE hitung(IN kalimat VARCHAR(255))
+BEGIN
+    SELECT IF(TRIM(kalimat) = '', 0,
+        LENGTH(TRIM(kalimat)) - LENGTH(REPLACE(TRIM(kalimat), ' ', '')) + 1
+    ) AS TOTAL;
+END //
+
+DELIMITER ;
 
 OUTPUT
 
-MariaDB [ikea]> Delimiter //
-MariaDB [ikea]> CREATE PROCEDURE hitung(IN word VARCHAR(20))
-    ->          BEGIN
-    ->                  SELECT CHAR_LENGTH(word) AS TOTAL;
-    ->          END //
-Query OK, 0 rows affected (0.003 sec)
-MariaDB [ikea]> DELIMITER ;
-MariaDB [ikea]> CALL hitung('woi');
+MariaDB [ikea]> CREATE PROCEDURE hitung(IN kalimat VARCHAR(255))
+    -> BEGIN
+    ->     SELECT IF(TRIM(kalimat) = '', 0,
+    ->         LENGTH(TRIM(kalimat)) - LENGTH(REPLACE(TRIM(kalimat), ' ', '')) + 1
+    ->     ) AS TOTAL;
+    -> END //
+Query OK, 0 rows affected (0.014 sec)+-------+
+MariaDB [ikea]> CALL hitung('melo suka cewe berbatang');
 +-------+
 | TOTAL |
 +-------+
-|     3 |
+|     4 |
 +-------+
+1 row in set (0.001 sec)
 
 SOAL 3 - PRIMA CHECK
 DELIMITER // 
-		CREATE PROCEDURE cekPrima(number INT)
-			BEGIN
-				
-			END //
+	CREATE PROCEDURE cekPrima(IN number INT)
+
+		BEGIN
+		DECLARE i INT DEFAULT 2;
+		DECLARE Togel BOOLEAN DEFAULT TRUE;
+
+			IF number > 1 THEN
+				WHILE i < number AND Togel = TRUE DO 
+				  IF(number % i = 0) THEN SET Togel = FALSE;
+				  END IF;
+
+				  SET i = i + 1;
+				END WHILE;				
+
+				IF Togel = TRUE THEN 
+					SELECT('IS PRIME NUMBER') AS HASIL;
+				ELSE 
+					SELECT('IS NOT PRIME NUMBER') AS HASIL;
+				END IF;
+
+			ELSE 
+			 SELECT('MASUKIN ANGKA DI ATAS 1') AS 'Error Message';
+			END IF;
+		END //
 DELIMITER ;
+
+OUTPUT
+MariaDB [ikea]> DELIMITER //
+MariaDB [ikea]>         CREATE PROCEDURE cekPrima(IN number INT)
+    ->
+    ->          BEGIN
+    ->          DECLARE i INT DEFAULT 2;
+    ->          DECLARE Togel BOOLEAN DEFAULT TRUE;
+    ->
+    ->                  IF number > 1 THEN
+    ->                          WHILE i < number AND Togel = TRUE DO
+    ->                            IF(number % i = 0) THEN SET Togel = FALSE;
+    ->                            END IF;
+    ->
+    ->                            SET i = i + 1;
+    ->                          END WHILE;
+    ->
+    ->                          IF Togel = TRUE THEN
+    ->                                  SELECT('IS PRIME NUMBER') AS HASIL;
+    ->                          ELSE
+    ->                                  SELECT('IS NOT PRIME NUMBER') AS HASIL;
+    ->                          END IF;
+    ->
+    ->                  ELSE
+    ->                   SELECT('MASUKIN ANGKA DI ATAS 1') AS 'Error Message';
+    ->                  END IF;
+    ->          END //
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [ikea]> DELIMITER ;
+MariaDB [ikea]> CALL CekPrima(5);
++-----------------+
+| HASIL           |
++-----------------+
+| IS PRIME NUMBER |
++-----------------+
+1 row in set (0.001 sec)
+
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [ikea]> CALL CekPrima(2);
++-----------------+
+| HASIL           |
++-----------------+
+| IS PRIME NUMBER |
++-----------------+
+1 row in set (0.001 sec)
+
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [ikea]> CALL CekPrima(8);
++---------------------+
+| HASIL               |
++---------------------+
+| IS NOT PRIME NUMBER |
++---------------------+
+1 row in set (0.001 sec)
 
 
 SOAL 4 - BOX/WINDOW/FIELD 
+x Panjang 
+	DELIMITER //
+		CREATE OR REPLACE PROCEDURE box(IN X INT, IN Y INT)
+		  BEGIN
+		    DECLARE horizontal_line VARCHAR(5000);
+		    DECLARE vertical_line VARCHAR(5000);
+		    DECLARE  total_rows INT;
 
+		    SET horizontal_line = CONCAT('+', REPEAT(CONCAT(REPEAT('-', Y), '+'), X));
+		    SET vertical_line = CONCAT('|', REPEAT(CONCAT(REPEAT(' ', Y), '|'), X));
+	            SET total_rows = (X * (Y + 1)) + 1;
 
+		    WITH RECURSIVE RowGenerator (n) AS (
+			SELECT 1
+			UNION ALL
+			SELECT n + 1 FROM RowGenerator WHERE n < total_rows
+		    )
 
+		    SELECT
+			CASE 
+				WHEN (n - 1) % (Y + 1) = 0 THEN horizontal_line
+				ELSE vertical_line
+			END AS 'Box'
+		    FROM RowGenerator;
+		    
+
+		  END //
+		
+	DELIMITER ;
+
+OUTPUT
+MariaDB [ikea]> DELIMITER //
+MariaDB [ikea]>                 CREATE OR REPLACE PROCEDURE box(IN X INT, IN Y INT)
+    ->            BEGIN
+    ->              DECLARE horizontal_line VARCHAR(5000);
+    ->              DECLARE vertical_line VARCHAR(5000);
+    ->              DECLARE  total_rows INT;
+    ->
+    ->              SET horizontal_line = CONCAT('+', REPEAT(CONCAT(REPEAT('-', Y), '+'), X));
+    ->              SET vertical_line = CONCAT('|', REPEAT(CONCAT(REPEAT(' ', Y), '|'), X));
+    ->              SET total_rows = (X * (Y + 1)) + 1;
+    ->
+    ->              WITH RECURSIVE RowGenerator (n) AS (
+    ->                  SELECT 1
+    ->                  UNION ALL
+    ->                  SELECT n + 1 FROM RowGenerator WHERE n < total_rows
+    ->              )
+    ->
+    ->              SELECT
+    ->                  CASE
+    ->                          WHEN (n - 1) % (Y + 1) = 0 THEN horizontal_line
+    ->                          ELSE vertical_line
+    ->                  END AS 'Box'
+    ->              FROM RowGenerator;
+    ->
+    ->            END //
+Query OK, 0 rows affected (0.007 sec)
+MariaDB [ikea]> DELIMITER ;
+MariaDB [ikea]> CALL box(4,5);
++---------------------------+
+| Box                       |
++---------------------------+
+| +-----+-----+-----+-----+ |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| +-----+-----+-----+-----+ |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| +-----+-----+-----+-----+ |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| +-----+-----+-----+-----+ |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| |     |     |     |     | |
+| +-----+-----+-----+-----+ |
++---------------------------+
+25 rows in set (0.001 sec)
