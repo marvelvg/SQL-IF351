@@ -1,0 +1,542 @@
+00000137145_toko_buku> db.pelanggan.insertMany([
+|   {
+|     nama: "Kentji Orlando",
+|     email: "Kenkenuwu@gmail.com",
+|     buku_dibeli: ["Pemrograman Web dengan Laravel", "Dasar-Dasar React JS"]
+|   },
+|   {
+|     nama: "Rusdi",
+|     email: "RusdiHitam@gmail.com",
+|     buku_dibeli: ["Laskar Pelangi", "Dasar-Dasar React JS"]
+|   },
+|   {
+|     nama: "Wowo",
+|     email: "Nyawiet2periode@gmail.com",
+|     buku_dibeli: ["Pemrograman Web dengan Laravel", "Laskar Pelangi", "Dasar-Dasar React JS"]
+|   }
+| ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6afd2d42efc1501f58b08d51'),
+    '1': ObjectId('6afd2d42efc1501f58b08d52'),
+    '2': ObjectId('6afd2d42efc1501f58b08d53')
+  }
+}
+00000137145_toko_buku>test> show dbs
+admin   40.00 KiB
+config  12.00 KiB
+local   40.00 KiB
+test> use 00000137145_toko_buku
+|
+switched to db 00000137145_toko_buku
+00000137145_toko_buku> db.createCollection("buku")
+|
+{ ok: 1 }
+00000137145_toko_buku> show dbs
+00000137145_toko_buku   8.00 KiB
+admin                  40.00 KiB
+config                 12.00 KiB
+local                  72.00 KiB
+00000137145_toko_buku> show collections
+buku
+00000137145_toko_buku> db.buku.insertMany(
+| [
+|       {judul: "Belajar MongoDB", penulis: "Andi", tahun: 2024, stok: 10},
+|       {judul: "Pemrograman Java", penulis: "Budi", tahun: 2023, stok: 5},
+|       {judul: "Data Science Dasar", penulis: "Citra", tahun: 2022, stok: 8}
+|
+| ]
+| )
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6afd18abefc1501f58b08d49'),
+    '1': ObjectId('6afd18abefc1501f58b08d4a'),
+    '2': ObjectId('6afd18abefc1501f58b08d4b')
+  }
+}
+
+00000137145_toko_buku>
+| db.buku.find().pretty()
+|
+[
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d49'),
+    judul: 'Belajar MongoDB',
+    penulis: 'Andi',
+    tahun: 2024,
+    stok: 10
+  },
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4a'),
+    judul: 'Pemrograman Java',
+    penulis: 'Budi',
+    tahun: 2023,
+    stok: 5
+  },
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4b'),
+    judul: 'Data Science Dasar',
+    penulis: 'Citra',
+    tahun: 2022,
+    stok: 8
+  }
+]
+
+00000137145_toko_buku> db.buku.find({tahun: 2023})
+[
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4a'),
+    judul: 'Pemrograman Java',
+    penulis: 'Budi',
+    tahun: 2023,
+    stok: 5
+  }
+]
+
+00000137145_toko_buku> db.buku.find({}, {judul: 1, penulis: 1, _id: 0})
+[
+  { judul: 'Belajar MongoDB', penulis: 'Andi' },
+  { judul: 'Pemrograman Java', penulis: 'Budi' },
+  { judul: 'Data Science Dasar', penulis: 'Citra' }
+]
+00000137145_toko_buku> db.buku.updateOne(
+|       {judul: "Pemrograman Java"},
+|       {$set: {stok: 12}}
+| )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+00000137145_toko_buku> db.buku.find({judul: "Pemrograman Java"})
+[
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4a'),
+    judul: 'Pemrograman Java',
+    penulis: 'Budi',
+    tahun: 2023,
+    stok: 12
+  }
+]
+
+00000137145_toko_buku> db.buku.deleteOne({tahun: 2022})
+|
+{ acknowledged: true, deletedCount: 1 }
+00000137145_toko_buku> db.buku.find().pretty()
+|
+[
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d49'),
+    judul: 'Belajar MongoDB',
+    penulis: 'Andi',
+    tahun: 2024,
+    stok: 10
+  },
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4a'),
+    judul: 'Pemrograman Java',
+    penulis: 'Budi',
+    tahun: 2023,
+    stok: 12
+  }
+]
+
+00000137145_toko_buku> db.buku.updateOne({judul: "Pemrograman Java"}, {$push: {kategori : "Coding"}})
+|
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+00000137145_toko_buku> db.buku.updateOne({judul: "Pemrograman Java"}, {$push: {Harga : 40000}})
+|
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+00000137145_toko_buku> db.buku.updateOne({judul: "Belajar MongoDB"}, {$push: {kategori : "Coding"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+00000137145_toko_buku> db.buku.updateOne({judul: "Belajar MongoDB"}, {$push: {Harga : 45000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+00000137145_toko_buku> db.buku.insertMany([
+|   {
+|     judul: "Pemrograman Web dengan Laravel",
+|     penulis: "Budi Raharjo",
+|     tahun_terbit: 2022,
+|     stok: 25,
+|     kategori: ["Coding", "Web Development"],
+|     Harga: [89000]
+|   },
+|   {
+|     judul: "Dasar-Dasar React JS",
+|     penulis: "Andi Wijaya",
+|     tahun_terbit: 2023,
+|     stok: 18,
+|     kategori: ["Coding", "Frontend"],
+|     Harga: [75000]
+|   },
+|   {
+|     judul: "Atomic Habits",
+|     penulis: "James Clear",
+|     tahun_terbit: 2019,
+|     stok: 40,
+|     kategori: ["Pengembangan Diri"],
+|     Harga: [98000]
+|   },
+|   {
+|     judul: "Laskar Pelangi",
+|     penulis: "Andrea Hirata",
+|     tahun_terbit: 2005,
+|     stok: 30,
+|     kategori: ["Novel", "Fiksi"],
+|     Harga: [85000]
+|   },
+|   {
+|     judul: "Algoritma dan Struktur Data",
+|     penulis: "Rinaldi Munir",
+|     tahun_terbit: 2016,
+|     stok: 12,
+|     kategori: ["Coding", "Akademik"],
+|     Harga: [120000]
+|   }
+| ])
+|
+|
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6afd2310efc1501f58b08d4c'),
+    '1': ObjectId('6afd2310efc1501f58b08d4d'),
+    '2': ObjectId('6afd2310efc1501f58b08d4e'),
+    '3': ObjectId('6afd2310efc1501f58b08d4f'),
+    '4': ObjectId('6afd2310efc1501f58b08d50')
+  }
+}
+00000137145_toko_buku> db.buku.find().pretty()
+[
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d49'),
+    judul: 'Belajar MongoDB',
+    penulis: 'Andi',
+    tahun: 2024,
+    stok: 10,
+    kategori: [ 'Coding' ],
+    Harga: [ 45000 ]
+  },
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4a'),
+    judul: 'Pemrograman Java',
+    penulis: 'Budi',
+    tahun: 2023,
+    stok: 12,
+    kategori: [ 'Coding' ],
+    Harga: [ 40000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4c'),
+    judul: 'Pemrograman Web dengan Laravel',
+    penulis: 'Budi Raharjo',
+    tahun_terbit: 2022,
+    stok: 25,
+    kategori: [ 'Coding', 'Web Development' ],
+    Harga: [ 89000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4d'),
+    judul: 'Dasar-Dasar React JS',
+    penulis: 'Andi Wijaya',
+    tahun_terbit: 2023,
+    stok: 18,
+    kategori: [ 'Coding', 'Frontend' ],
+    Harga: [ 75000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4e'),
+    judul: 'Atomic Habits',
+    penulis: 'James Clear',
+    tahun_terbit: 2019,
+    stok: 40,
+    kategori: [ 'Pengembangan Diri' ],
+    Harga: [ 98000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4f'),
+    judul: 'Laskar Pelangi',
+    penulis: 'Andrea Hirata',
+    tahun_terbit: 2005,
+    stok: 30,
+    kategori: [ 'Novel', 'Fiksi' ],
+    Harga: [ 85000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d50'),
+    judul: 'Algoritma dan Struktur Data',
+    penulis: 'Rinaldi Munir',
+    tahun_terbit: 2016,
+    stok: 12,
+    kategori: [ 'Coding', 'Akademik' ],
+    Harga: [ 120000 ]
+  }
+]
+
+00000137145_toko_buku> db.buku.updateOne({judul:"Atomic Habits"}, {$set: {stok: 14}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+00000137145_toko_buku> db.buku.find().pretty()
+[
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d49'),
+    judul: 'Belajar MongoDB',
+    penulis: 'Andi',
+    tahun: 2024,
+    stok: 10,
+    kategori: [ 'Coding' ],
+    Harga: [ 45000 ]
+  },
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4a'),
+    judul: 'Pemrograman Java',
+    penulis: 'Budi',
+    tahun: 2023,
+    stok: 12,
+    kategori: [ 'Coding' ],
+    Harga: [ 40000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4c'),
+    judul: 'Pemrograman Web dengan Laravel',
+    penulis: 'Budi Raharjo',
+    tahun_terbit: 2022,
+    stok: 25,
+    kategori: [ 'Coding', 'Web Development' ],
+    Harga: [ 89000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4d'),
+    judul: 'Dasar-Dasar React JS',
+    penulis: 'Andi Wijaya',
+    tahun_terbit: 2023,
+    stok: 18,
+    kategori: [ 'Coding', 'Frontend' ],
+    Harga: [ 75000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4e'),
+    judul: 'Atomic Habits',
+    penulis: 'James Clear',
+    tahun_terbit: 2019,
+    stok: 14,
+    kategori: [ 'Pengembangan Diri' ],
+    Harga: [ 98000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4f'),
+    judul: 'Laskar Pelangi',
+    penulis: 'Andrea Hirata',
+    tahun_terbit: 2005,
+    stok: 30,
+    kategori: [ 'Novel', 'Fiksi' ],
+    Harga: [ 85000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d50'),
+    judul: 'Algoritma dan Struktur Data',
+    penulis: 'Rinaldi Munir',
+    tahun_terbit: 2016,
+    stok: 12,
+    kategori: [ 'Coding', 'Akademik' ],
+    Harga: [ 120000 ]
+  }
+]
+
+
+00000137145_toko_buku> db.buku.updateMany(
+| {judul: {$in: ["Atomic Habits", "Pemrograman Java"]}},
+| { $set: {kategori : "Best Seller"}}
+| )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+00000137145_toko_buku> db.buku.find().pretty()
+[
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d49'),
+    judul: 'Belajar MongoDB',
+    penulis: 'Andi',
+    tahun: 2024,
+    stok: 10,
+    kategori: [ 'Coding' ],
+    Harga: [ 45000 ]
+  },
+  {
+    _id: ObjectId('6afd18abefc1501f58b08d4a'),
+    judul: 'Pemrograman Java',
+    penulis: 'Budi',
+    tahun: 2023,
+    stok: 12,
+    kategori: 'Best Seller',
+    Harga: [ 40000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4c'),
+    judul: 'Pemrograman Web dengan Laravel',
+    penulis: 'Budi Raharjo',
+    tahun_terbit: 2022,
+    stok: 25,
+    kategori: [ 'Coding', 'Web Development' ],
+    Harga: [ 89000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4d'),
+    judul: 'Dasar-Dasar React JS',
+    penulis: 'Andi Wijaya',
+    tahun_terbit: 2023,
+    stok: 18,
+    kategori: [ 'Coding', 'Frontend' ],
+    Harga: [ 75000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4e'),
+    judul: 'Atomic Habits',
+    penulis: 'James Clear',
+    tahun_terbit: 2019,
+    stok: 14,
+    kategori: 'Best Seller',
+    Harga: [ 98000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4f'),
+    judul: 'Laskar Pelangi',
+    penulis: 'Andrea Hirata',
+    tahun_terbit: 2005,
+    stok: 30,
+    kategori: [ 'Novel', 'Fiksi' ],
+    Harga: [ 85000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d50'),
+    judul: 'Algoritma dan Struktur Data',
+    penulis: 'Rinaldi Munir',
+    tahun_terbit: 2016,
+    stok: 12,
+    kategori: [ 'Coding', 'Akademik' ],
+    Harga: [ 120000 ]
+  }
+]
+
+// Karena aku gak ada set jumlah buku di Bawah 5, dibawah 15 aja ya
+00000137145_toko_buku> db.buku.deleteMany({stok: {$lt: 15}})
+|
+{ acknowledged: true, deletedCount: 4 }
+00000137145_toko_buku> db.buku.find()
+[
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4c'),
+    judul: 'Pemrograman Web dengan Laravel',
+    penulis: 'Budi Raharjo',
+    tahun_terbit: 2022,
+    stok: 25,
+    kategori: [ 'Coding', 'Web Development' ],
+    Harga: [ 89000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4d'),
+    judul: 'Dasar-Dasar React JS',
+    penulis: 'Andi Wijaya',
+    tahun_terbit: 2023,
+    stok: 18,
+    kategori: [ 'Coding', 'Frontend' ],
+    Harga: [ 75000 ]
+  },
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4f'),
+    judul: 'Laskar Pelangi',
+    penulis: 'Andrea Hirata',
+    tahun_terbit: 2005,
+    stok: 30,
+    kategori: [ 'Novel', 'Fiksi' ],
+    Harga: [ 85000 ]
+  }
+]
+
+// Karena tidak ada kategori Bernama teknologi di sini ak pakai coding, harga di atas 85000, tahun diatas 2005
+
+00000137145_toko_buku> db.buku.find({
+|   Harga: { $gt: 85000 },
+|   tahun_terbit: { $gt: 2005 },
+|   kategori: "Coding"
+| })
+[
+  {
+    _id: ObjectId('6afd2310efc1501f58b08d4c'),
+    judul: 'Pemrograman Web dengan Laravel',
+    penulis: 'Budi Raharjo',
+    tahun_terbit: 2022,
+    stok: 25,
+    kategori: [ 'Coding', 'Web Development' ],
+    Harga: [ 89000 ]
+  }
+]
+
+00000137145_toko_buku> db.createCollection("pelanggan")
+{ ok: 1 }
+
+00000137145_toko_buku> db.pelanggan.insertMany([
+|   {
+|     nama: "Kentji Orlando",
+|     email: "Kenkenuwu@gmail.com",
+|     buku_dibeli: ["Pemrograman Web dengan Laravel", "Dasar-Dasar React JS"]
+|   },
+|   {
+|     nama: "Rusdi",
+|     email: "RusdiHitam@gmail.com",
+|     buku_dibeli: ["Laskar Pelangi", "Dasar-Dasar React JS"]
+|   },
+|   {
+|     nama: "Wowo",
+|     email: "Nyawiet2periode@gmail.com",
+|     buku_dibeli: ["Pemrograman Web dengan Laravel", "Laskar Pelangi", "Dasar-Dasar React JS"]
+|   }
+| ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6afd2d42efc1501f58b08d51'),
+    '1': ObjectId('6afd2d42efc1501f58b08d52'),
+    '2': ObjectId('6afd2d42efc1501f58b08d53')
+  }
+}
+00000137145_toko_buku>
